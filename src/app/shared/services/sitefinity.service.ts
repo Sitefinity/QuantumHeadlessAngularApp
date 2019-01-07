@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 
-const sitefinityUrl = 'http://site17899124552543.srv06.sandbox.sitefinity.com/';
+const sitefinityUrl = 'http://site17863115111365.srv05.sandbox.sitefinity.com';
 const serviceUrl = sitefinityUrl + '/api/default/';
 
 @Injectable({

@@ -10,7 +10,7 @@ import {RouterModule} from '@angular/router';
 import {AppRoutingModule} from './app-routing/app-routing.module';
 import { SearchComponent } from './shared/search/search.component';
 import { SearchResultComponent } from './shared/search/search-result/search-result.component';
-import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 import { TaxaComponent } from './shared/taxa/taxa.component';
 import {ShowcasesComponent} from './shared/showcases/showcases.component';
 import { ShowcaseComponent } from './shared/showcases/showcase/showcase.component';
@@ -31,9 +31,7 @@ import { ShowcaseComponent } from './shared/showcases/showcase/showcase.componen
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    RouterModule,
-    FormsModule,
-    ReactiveFormsModule
+    RouterModule
   ],
   providers: [
     {provide: 'Sitefinity', useValue: window['Sitefinity']},

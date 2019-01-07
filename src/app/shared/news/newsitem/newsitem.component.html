@@ -1,6 +1,6 @@
 <div *ngIf="newsItem" class="row">
   <div class="container">
-    <ng-container *ngIf="!edit">
+    <ng-container>
       <h2>{{newsItem.Title}}</h2>
       <div class="text-muted">{{newsItem.DateCreated | date:'medium'}} by {{newsItem.Author}}</div>
       <div class="news_image news_image_detail">
@@ -10,28 +10,6 @@
       </div>
       <div [innerHtml]="newsItemContent">
       </div>
-    </ng-container>
-    <ng-container *ngIf="edit">
-      <h2 contenteditable="true">{{newsItem.Title}}</h2>
-      <label for="title">Title</label>
-      <input id="title" required [(ngModel)]="newsItem.Title">
-      <br>
-      <label for="author">Author</label>
-      <input id="author" required [(ngModel)]="newsItem.Author">
-      <div class="text-muted">{{newsItem.DateCreated | date:'medium'}} by {{newsItem.Author}}</div>
-      <!--<div class="news_image news_image_detail">-->
-        <!--<img style="display: block; min-height: 230px;" *ngIf="newsItem.Thumbnail" [src]="newsItem.Thumbnail.Url" [alt]="newsItem.Thumbnail.AlternativeText"/>-->
-      <!--</div>-->
-      <!--<div class="news_summary" [innerHtml]="newsItem.Summary">-->
-      <!--</div>-->
-      <br>
-      <label for="summary">Summary</label>
-      <textarea id="summary" [(ngModel)]="newsItem.Summary"></textarea>
-      <br>
-      <label for="content">News content</label>
-      <textarea id="content" [(ngModel)]="newsItemContent"></textarea>
-      <!--<div [innerHtml]="newsItemContent">-->
-      <!--</div>-->
     </ng-container>
   </div>
 </div>
