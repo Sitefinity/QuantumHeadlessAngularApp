@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-9">
+      <div *ngIf="newsItems && newsItems.length>0">
+        <ng-container *ngFor="let newsItem of newsItems; let i = index">
+          <ul *ngIf="i % 3 == 0" class="list-unstyled row news-list-page">
+            <li class="col-md-4">
+              <ng-container
+                *ngTemplateOutlet="newsItemTemplate; context: { item: newsItem}">
+              </ng-container>
+            </li>
+            <li class="col-md-4" *ngIf="i + 1 < newsItems.length">
+              <ng-container
+                *ngTemplateOutlet="newsItemTemplate; context: { item: newsItems[i + 1]}">
+              </ng-container>
+            </li>
+            <li class="col-md-4" *ngIf="i + 2 < newsItems.length">
+              <ng-container
+                *ngTemplateOutlet="newsItemTemplate; context: { item: newsItems[i + 2]}">
+              </ng-container>
+            </li>
+          </ul>
+        </ng-container>
+
+        <div *ngIf="shouldShowLoadMore" class="load-more text-center u-mt4">
+          <a (click)="LoadMore()" style="cursor: pointer;">
+            <span class="glyphicon glyphicon-chevron-down glyph-bordered"></span>
+            <br />
+            Load 10 more news
+          </a>
+        </div>
+      </div>
+
+    </div>
+    <div *ngIf="(categories | async) && (tags | async)" class="col-md-3 gray_column">
+      <div class="row">
+        <div class="col-md-12">
+          <div class="sf-Long-text">
+            <h5 style="text-align: left">Categories</h5>
+          </div>
+          <app-taxa classes="list-unstyled categories-list" [taxas]="categories | async" (taxaClicked)="getNewsItemsByTaxa(categoryName, $event)"></app-taxa>
+          <div class="sf-Long-text">
+            <h5 style="text-align: left">Tags</h5>
+          </div>
+          <app-taxa classes="categories-list list-unstyled" [taxas]="tags | async" (taxaClicked)="getNewsItemsByTaxa(tagsName, $event)"></app-taxa>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<ng-template #newsItemTemplate let-newsItem="item">
+  <div [ngClass]="{'featured_news_recent': newsItem.Featured}" class="col-xs-12 news_item_recent news_text homepage_news">
+    <a routerLink="/news/{{newsItem.Id}}">
+      <img class="img-circle" *ngIf="newsItem.Thumbnail" [src]="newsItem.Thumbnail.Url" [alt]="newsItem.Thumbnail.AlternativeText"/>
+    </a>
+    <div class="homepage_news_text">
+      <h4>
+        <a routerLink="/news/{{newsItem.Id}}">
+          {{newsItem.Title}}
+        </a>
+      </h4>
+      <span class="text-muted">
+        {{newsItem.DateCreated}} <br>
+         by
+        {{newsItem.Author}}
+    </span>
+      <p [innerHtml]="newsItem.Summary">
+      </p>
+    </div>
+  </div>
+  <div *ngIf="newsItem.Featured" class="ribbon"><span>FEATURED</span></div>
+</ng-template>

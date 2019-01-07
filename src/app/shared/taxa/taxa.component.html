@@ -1,0 +1,9 @@
+<ul [attr.class]="classes">
+  <li *ngFor="let taxa of taxas">
+    <a (click)="handleClick(taxa.Id)">{{taxa.Title}}</a>
+    <span *ngIf="taxa.Count" class="text-muted">
+    ({{taxa.Count}})
+  </span>
+  </li>
+</ul>
+

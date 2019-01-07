@@ -1,0 +1,57 @@
+<div *ngIf="(showcase | async) as showcase" class="row">
+  <div class="container">
+    <h2>
+      {{showcase.Title}}
+    </h2>
+    <div class="col-md-4 showcase_image">
+      <div *ngIf="showcase.Thumbnail">
+        <img [src]="showcase.Thumbnail.Url" [alt]="showcase.Thumbnail.AlternativeText" />
+      </div>
+    </div>
+
+    <div class="col-md-8 showcase_summary">
+      <div class="row showcase-info">
+        <div class="col-md-6 no-padding">
+          <div>
+            <strong>Client</strong>
+
+            <p>{{showcase.Client}}</p>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div>
+            <strong>Website</strong>
+
+            <p><a [href]="showcase.Website" target="_blank">{{showcase.Website}}</a></p>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-12">
+          <div class="showcase-info">
+            <strong>Challenge</strong>
+
+            <p [innerHtml]="showcase.Challenge"></p>
+          </div>
+
+          <div class="showcase-info">
+            <strong> Solution</strong>
+
+            <p [innerHtml]="showcase.Solution"></p>
+          </div>
+
+          <div class="showcase-info showcase-info-last">
+            <strong>Results</strong>
+
+            <p [innerHtml]="showcase.Results"></p>
+          </div>
+
+          <div *ngIf="showcase.Download">
+            <a class="btn btn-primary btn-quantum-homepage btn-q-download" [href]="showcase.Download.Url">Read the Whole story</a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
