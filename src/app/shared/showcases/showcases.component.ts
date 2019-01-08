@@ -3,7 +3,6 @@ import { ShowcasesService } from '../services/showcases.service';
 import { Image } from '../news/newsitems/newsitems.component';
 import { Observable } from 'rxjs';
 import { RxBaseComponent } from '../common/rx-base/rx-base.component';
-import {ActivatedRoute} from '@angular/router';
 
 @Component({
   selector: 'app-showcases',
@@ -12,7 +11,7 @@ import {ActivatedRoute} from '@angular/router';
 export class ShowcasesComponent extends RxBaseComponent implements OnInit {
   showcases: Observable<Showcase[]>;
 
-  constructor(private showcasesService: ShowcasesService, private route: ActivatedRoute) {
+  constructor(private showcasesService: ShowcasesService) {
     super();
   }
 
