@@ -13,6 +13,10 @@ import { SearchResultComponent } from './shared/search/search-result/search-resu
 import { TaxaComponent } from './shared/taxa/taxa.component';
 import {ShowcasesComponent} from './shared/showcases/showcases.component';
 import { ShowcaseComponent } from './shared/showcases/showcase/showcase.component';
+import {ConfigComponent} from './shared/config/config.component';
+import {FormsModule} from '@angular/forms';
+import {LOCAL_STORAGE, StorageService} from './shared/services/storage.service';
+import {LayoutComponent} from './shared/layout/layout.component';
 
 @NgModule({
   declarations: [
@@ -24,16 +28,20 @@ import { ShowcaseComponent } from './shared/showcases/showcase/showcase.componen
     SearchComponent,
     SearchResultComponent,
     TaxaComponent,
-    ShowcaseComponent
+    ShowcaseComponent,
+    ConfigComponent,
+    LayoutComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    RouterModule
+    RouterModule,
+    FormsModule
   ],
   providers: [
-    {provide: 'Sitefinity', useValue: window['Sitefinity']},
+    { provide: 'Sitefinity', useValue: window['Sitefinity'] },
+    { provide: LOCAL_STORAGE, useValue: new StorageService(localStorage) },
   ],
   bootstrap: [AppComponent]
 })

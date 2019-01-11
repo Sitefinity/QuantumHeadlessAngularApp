@@ -1,0 +1,20 @@
+
+<form #f="ngForm" (ngSubmit)="onSave()">
+  <div class="container col-md-offset-4 col-md-4">
+    <h3>Enter url to a Sitefinity hosted trial instance below:</h3>
+    <div class="form-group">
+      <label for="configInput">Sandbox Url:</label>
+      <input class="form-control"
+             name="configInput"
+             id="configInput"
+             type="text"
+             ngDefaultControl
+             required
+             [(ngModel)]="currentUrl">
+    </div>
+    <div>
+      <button class="btn btn-primary" [disabled]="!f.valid" type="submit">Save</button>
+    </div>
+  </div>
+</form>
+

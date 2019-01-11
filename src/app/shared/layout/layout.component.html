@@ -1,0 +1,53 @@
+<header>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-9">
+        <div class="row">
+          <div class="col-sm-3 col-xs-2">
+            <div class="sf-Long-text">
+              <p>
+                <a routerLink="/news">
+                  <img *ngIf="logoImage | async" style="margin-top: 20px;" [alt]="(logoImage | async).AlternativeText" [src]="(logoImage | async).Url" [title]="(logoImage | async).AlternativeText">
+                </a>
+              </p>
+            </div>
+          </div>
+          <div class="col-sm-9 col-xs-10">
+            <nav class="navbar navbar-default  blue-horizontal">
+              <div class="container-fluid">
+                <div class="collapse navbar-collapse">
+                  <ul class="nav navbar-nav">
+                    <li class="dropdown"><a class="upper-nav dropdown-toggle" routerLink="/news" routerLinkActive="active">News</a></li>
+                    <li class="dropdown"><a class="upper-nav dropdown-toggle" routerLink="/showcases" routerLinkActive="active">Showcases</a></li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-3 header-right-group">
+        <div class="row">
+          <div class="col-xs-12">
+            <app-search></app-search>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+<main>
+  <div class="row">
+    <div class="homepage-card-banner">
+      <img *ngIf="bannerImage | async" [alt]="(bannerImage | async).AlternativeText" [src]="(bannerImage | async).Url" [title]="(bannerImage | async).AlternativeText" class="splash">
+      <div class="container">
+        <div class="homepage-card-banner-text">
+          <h2 *ngIf="title | async; let title">{{title}}</h2>
+          <p *ngIf="(title | async) === 'Showcases'">We create hard-working web systems that put you in control. Fully integrated, and using the very latest tech.</p>
+
+        </div>
+      </div>
+    </div>
+  </div>
+  <router-outlet></router-outlet>
+</main>

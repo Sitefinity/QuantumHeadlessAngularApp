@@ -21,7 +21,7 @@ export class SearchService {
     this.router.navigate(['/search-results']);
   }
 
-  getItemsBySearchWord(searchWord: string): void {
+  private getItemsBySearchWord(searchWord: string): void {
     const batch = this.sitefinity.instance.batch(data => this._searchResults.next(this.mapSearchResults(data)));
     batch.get({ entitySet: 'showcases', query: this.sitefinity
         .query

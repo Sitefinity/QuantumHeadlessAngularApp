@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
+import {SettingsService} from './settings.service';
 
-const sitefinityUrl = 'http://site17863115111365.srv05.sandbox.sitefinity.com';
-const serviceUrl = sitefinityUrl + '/api/default/';
+const endpoint = '/api/default/';
 
 @Injectable({
   providedIn: 'root'
@@ -27,10 +27,13 @@ export class SitefinityService {
     return this._hasAuthentication;
   }
 
-  constructor(@Inject('Sitefinity') private sf) {}
+  constructor(@Inject('Sitefinity') private sf, private settings: SettingsService) {}
 
   private initializeInstance(){
-    this.sitefinity = new this.sf({serviceUrl});
-    this.queryInstance = new this.sf.Query();
+    const serviceUrl = `${this.settings.url}${endpoint}`;
+    if(serviceUrl) {
+      this.sitefinity = new this.sf({serviceUrl});
+      this.queryInstance = new this.sf.Query();
+    }
   }
 }

@@ -10,30 +10,7 @@ import {filter, map, mergeMap} from 'rxjs/internal/operators';
   selector: 'app-root',
   templateUrl: './app.component.html'
 })
-export class AppComponent implements OnInit {
-  bannerImage: Observable<Image>;
-  logoImage: Observable<Image>;
-  title: BehaviorSubject<string> = new BehaviorSubject<string>(null);
+export class AppComponent{
+  constructor() {}
 
-  constructor(private imageService: ImagesService, private router: Router, private route: ActivatedRoute, private titleService: Title) {}
-
-  ngOnInit() {
-    this.router.events.pipe(
-      filter(event => event instanceof NavigationEnd),
-      map(() => this.route),
-      map((route) => {
-        while (route.firstChild) route = route.firstChild;
-        return route;
-      }),
-      filter((route) => route.outlet === 'primary'),
-      mergeMap((route) => route.data)
-    )
-    .subscribe((event) => {
-      this.bannerImage = this.imageService.getImageByTitle(event['image']);
-      this.title.next(event['title']);
-      this.titleService.setTitle(event['title']);
-    });
-
-    this.logoImage = this.imageService.getImageByTitle('Logo_Quantum');
-  }
 }
