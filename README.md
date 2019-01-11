@@ -1,6 +1,6 @@
 # QuantumHeadlessAngularApp
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.5. It uses the [Sitefinity WebServices SDK](https://www.npmjs.com/package/sitefinity-webservices-sdk) and data from the Sitefinity hosted trial (Qunatum project)
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 6.2.5. It uses the [Sitefinity WebServices SDK](https://www.npmjs.com/package/sitefinity-webservices-sdk) and data from the Sitefinity hosted trial (Quantum project)
 
 ## Development server
 
