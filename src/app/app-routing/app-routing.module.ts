@@ -11,12 +11,14 @@ import {ConfigComponent} from '../shared/config/config.component';
 import {ConfigGuard} from '../config.guard';
 import {ROUTE_PATHS} from './route-paths';
 import {LayoutComponent} from '../shared/layout/layout.component';
+import {config} from 'rxjs';
 
 
 const routes: Routes = [
   { path: ROUTE_PATHS.LAYOUT,
     component: LayoutComponent,
     canActivate: [ConfigGuard],
+    runGuardsAndResolvers: 'always',
     children: [
       { path: '', redirectTo: 'news', pathMatch: 'full' },
       { path: ROUTE_PATHS.NEWS, component: NewsItemsComponent, canActivate: [ConfigGuard], data: { title: 'Quantum News', image: 'News Head Banner'}},
@@ -34,7 +36,7 @@ const routes: Routes = [
 @NgModule({
   imports: [
     CommonModule,
-    RouterModule.forRoot(routes)
+    RouterModule.forRoot(routes, {onSameUrlNavigation: 'reload'})
   ],
   exports: [ RouterModule ]
 })

@@ -447,7 +447,15 @@ input[type="search"] {
   border-color: #ff9839; }
 
 .carousel-control.right, .carousel-control.left {
-  background-image: none !important; }
+  background-image: none !important;
+  color: #00b4c9}
+
+.carousel-control .icon-prev,
+.carousel-control .icon-next {
+  font-size: 40px;
+  width: 40px;
+  height: 40px;
+}
 
 .custom-slider {
   margin: auto;
@@ -1369,7 +1377,9 @@ a {
   font-weight: 600;
   padding: 10px 20px; }
 
-.btn-quantum-homepage:hover {
+.btn-quantum-homepage:hover,
+.btn-quantum-homepage:active,
+.btn-quantum-homepage:focus {
   background: #00b4c9;
   color: #112233; }
 
@@ -1672,3 +1682,6 @@ a {
   background: black;
   color: white;
   opacity: 0.8; }
+.mb-5 {
+  margin-bottom: 5%;
+}

@@ -1,3 +1,9 @@
+
+<div class="row mb-5">
+  <div class="container">
+    <app-testimonials></app-testimonials>
+  </div>
+</div>
 <div [ngClass]="{'showcase': i % 2 === 0}" *ngFor="let showcase of (showcases | async); index as i" class="row showcase_row">
   <div class="container">
     <h2>

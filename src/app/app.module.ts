@@ -17,6 +17,8 @@ import {ConfigComponent} from './shared/config/config.component';
 import {FormsModule} from '@angular/forms';
 import {LOCAL_STORAGE, StorageService} from './shared/services/storage.service';
 import {LayoutComponent} from './shared/layout/layout.component';
+import { TestimonialsComponent } from './shared/testimonials/testimonials.component';
+import { CarouselModule } from 'ngx-bootstrap/carousel';
 
 @NgModule({
   declarations: [
@@ -30,14 +32,16 @@ import {LayoutComponent} from './shared/layout/layout.component';
     TaxaComponent,
     ShowcaseComponent,
     ConfigComponent,
-    LayoutComponent
+    LayoutComponent,
+    TestimonialsComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
     RouterModule,
-    FormsModule
+    FormsModule,
+    CarouselModule.forRoot()
   ],
   providers: [
     { provide: 'Sitefinity', useValue: window['Sitefinity'] },
