@@ -38,3 +38,9 @@ list a {
 .pr-2 {
   padding-right: 20px !important;
 }
+.github-banner {
+  padding: 5px 15px;
+  color: #fff;
+  font-size: 15px;
+  background-color: #81dfb0;
+}
