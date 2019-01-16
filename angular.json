@@ -24,7 +24,8 @@
             ],
             "styles": [
               "src/css/main.min.css",
-              "src/css/quantum-style.css"
+              "src/css/quantum-style.css",
+              "src/css/quantum-headless.css"
             ],
             "scripts": [
               "node_modules/sitefinity-webservices-sdk/dist/sitefinity-webservices-sdk.js"

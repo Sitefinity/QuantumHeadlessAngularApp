@@ -3,7 +3,7 @@
     <h2>
     {{showcase.Title}}
     </h2>
-    <div class="col-md-4 showcase_image">
+    <div class="col-md-4 showcase_image pr-2">
       <div *ngIf="showcase.Thumbnail">
         <img [src]="showcase.Thumbnail.Url" [alt]="showcase.Thumbnail.AlternativeText" />
       </div>
@@ -47,7 +47,7 @@
           </div>
 
           <div *ngIf="showcase.Download">
-            <a class="btn btn-primary btn-quantum-homepage btn-q-download" [href]="showcase.Download.Url">Read the Whole story</a>
+            <a class="btn btn-primary btn-quantum-homepage mt-3 ml-2" [href]="showcase.Download.Url">Read the story</a>
           </div>
         </div>
       </div>

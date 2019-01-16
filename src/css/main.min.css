@@ -8961,22 +8961,6 @@ div.k-event {
   color: #fff;
   border-color: transparent
 }
-
 .sf-registration-link {
   clear: both
-}
-
-.categories-list a {
-  cursor: pointer;
-}
-
-.load-more a {
-  display: block;
-  margin-bottom: 40px;
-  color: #00b4c9;
-  font-size: 16px;
-}
-
-.svg-inline--fa.fa-w-16 {
-  width: 1em;
 }

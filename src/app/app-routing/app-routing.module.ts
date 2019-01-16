@@ -23,7 +23,7 @@ const routes: Routes = [
       { path: ROUTE_PATHS.NEWS + '/:id', component: NewsItemComponent, canActivate: [ConfigGuard] },
       { path: ROUTE_PATHS.SHOWCASES,  component: ShowcasesComponent, canActivate: [ConfigGuard], data: { title: 'Showcases', image: 'Development Head Banner' }},
       { path: ROUTE_PATHS.SHOWCASES + '/:id',  component: ShowcaseComponent, canActivate: [ConfigGuard] },
-      { path: ROUTE_PATHS.SEARCH_RESULTS,  component: SearchResultComponent, canActivate: [ConfigGuard] }
+      { path: ROUTE_PATHS.SEARCH_RESULTS + '/:searchTerm',  component: SearchResultComponent, canActivate: [ConfigGuard], data: { title: 'Search results', image: 'Forums Head Banner'} }
     ]
   },
   { path: ROUTE_PATHS.CONFIG,  component: ConfigComponent},

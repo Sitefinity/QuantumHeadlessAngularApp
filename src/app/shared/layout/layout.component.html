@@ -36,7 +36,7 @@
     </div>
   </div>
 </header>
-<main>
+<main class="container-fluid">
   <div class="row">
     <div class="homepage-card-banner">
       <img *ngIf="bannerImage | async" [alt]="(bannerImage | async).AlternativeText" [src]="(bannerImage | async).Url" [title]="(bannerImage | async).AlternativeText" class="splash">

@@ -18,7 +18,7 @@ export class SearchService {
 
   search(searchWord: string) {
     this.getItemsBySearchWord(searchWord);
-    this.router.navigate(['/search-results']);
+    this.router.navigate(['/search-results', searchWord]);
   }
 
   private getItemsBySearchWord(searchWord: string): void {
@@ -80,7 +80,7 @@ export class SearchService {
               break;
             case 'showcases':
               valuesArray.forEach(contentItm => {
-                searchResults.push({ Title: contentItm.Title, DetailLink: '/showcase/' + contentItm.Id, Content: contentItm.Challenge });
+                searchResults.push({ Title: contentItm.Title, DetailLink: '/showcases/' + contentItm.Id, Content: contentItm.Challenge });
               });
               break;
             case 'images':
