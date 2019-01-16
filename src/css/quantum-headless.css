@@ -1,3 +1,4 @@
+
 .news_image {
   max-height: 400px;
   overflow: hidden;
@@ -43,4 +44,11 @@ list a {
   color: #fff;
   font-size: 15px;
   background-color: #81dfb0;
+}
+.categories-list a,
+.sf-Tags a {
+  cursor: pointer;
+}
+.homepage-card-banner {
+  min-height: 300px;
 }
