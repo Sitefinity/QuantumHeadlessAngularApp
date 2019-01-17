@@ -53,3 +53,6 @@ list a {
 .homepage-card-banner img {
   min-height: 300px;
 }
+.bold {
+  font-weight: bold;
+}
