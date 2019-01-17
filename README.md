@@ -16,5 +16,5 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 ## Test it online
 
-1. Go to: http://quantum-headless.sitefinity.site
+1. Go to: <a href="http://quantum-headless.sitefinity.site" target="_blank"> http://quantum-headless.sitefinity.site </a>
 2. Enter the url of the Sitefinity sandbox and save.
