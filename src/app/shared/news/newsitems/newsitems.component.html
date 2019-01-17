@@ -61,7 +61,7 @@
         </a>
       </h4>
       <span class="text-muted">
-        {{newsItem.DateCreated}} <br>
+        {{newsItem.DateCreated | date: 'medium'}} <br>
          by
         {{newsItem.Author}}
     </span>
