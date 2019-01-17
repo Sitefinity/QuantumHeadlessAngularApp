@@ -56,3 +56,9 @@ list a {
 .bold {
   font-weight: bold;
 }
+.github-link {
+  color: #fff;
+}
+.github-link:hover {
+  color: #ffae00;
+}
