@@ -22,6 +22,7 @@ export class SearchResultComponent extends RxBaseComponent implements OnInit  {
     this.route.params.subscribe(data => {
       if(data['searchTerm']) {
         this.searchTerm = data['searchTerm'];
+        this.searchService.getItemsBySearchWord(this.searchTerm);
       }
     })
   }

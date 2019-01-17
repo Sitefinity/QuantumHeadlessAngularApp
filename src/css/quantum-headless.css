@@ -49,6 +49,7 @@ list a {
 .sf-Tags a {
   cursor: pointer;
 }
-.homepage-card-banner {
+.homepage-card-banner,
+.homepage-card-banner img {
   min-height: 300px;
 }

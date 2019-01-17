@@ -11,8 +11,11 @@
               <a [attr.href]="result.ImageUrl"><img [src]="result.ImageUrl" [alt]="result.Title"/></a>
             </div>
             <div class="media-body sf-media-body">
-              <h3><a [routerLink]="result.DetailLink" style="cursor: pointer;">{{result.Title}}</a></h3>
-              <p [innerHtml]="result.Content"></p>
+              <h3>
+                <a *ngIf="result.DetailLink" [routerLink]="result.DetailLink" style="cursor: pointer;">{{result.Title}}</a>
+                <a *ngIf="result.ImageUrl" [attr.href]="result.ImageUrl" style="cursor: pointer;">{{result.Title}}</a>
+              </h3>
+              <p *ngIf="result.Content" [innerHtml]="result.Content"></p>
               <a *ngIf="result.DetailLink" [routerLink]="result.DetailLink" style="cursor: pointer;">{{settings.url + result.DetailLink}}</a>
               <a *ngIf="result.ImageUrl" [attr.href]="result.ImageUrl" style="cursor: pointer;">{{result.ImageUrl}}</a>
             </div>
