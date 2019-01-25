@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {CanActivate, Router} from '@angular/router';
+import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot} from '@angular/router';
 import {SettingsService} from './shared/services/settings.service';
 
 @Injectable({
@@ -9,11 +9,13 @@ export class ConfigGuard implements CanActivate {
 
   constructor(private router: Router, private settings: SettingsService) { }
 
-  canActivate() {
-    if (this.settings.url) {
+  canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot) {
+    const sandboxUrl = route.queryParams['url'];
+
+    if (this.settings.url && !sandboxUrl) {
       return true;
     } else {
-      this.router.navigate(["/config"]);
+      this.router.navigate(["/config"], {queryParams: {'url': sandboxUrl}});
       return false;
     }
   }
