@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {SettingsService} from '../services/settings.service';
-import {Router} from '@angular/router';
+import {ActivatedRoute, Router} from '@angular/router';
 import {ROUTE_PATHS} from '../../app-routing/route-paths';
 
 @Component({
@@ -9,9 +9,14 @@ import {ROUTE_PATHS} from '../../app-routing/route-paths';
 })
 export class ConfigComponent implements OnInit {
 
-  constructor(private settings: SettingsService, private router: Router) { }
+  constructor(private settings: SettingsService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
+    const sandboxUrl = this.route.snapshot.queryParams['url'];
+    if (sandboxUrl) {
+      this.currentUrl = sandboxUrl;
+      this.onSave();
+    }
   }
 
   get currentUrl(): string {
