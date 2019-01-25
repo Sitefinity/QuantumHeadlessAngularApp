@@ -9,25 +9,41 @@ import {ShowcasesComponent} from '../shared/showcases/showcases.component';
 import {ShowcaseComponent} from '../shared/showcases/showcase/showcase.component';
 import {ConfigComponent} from '../shared/config/config.component';
 import {ConfigGuard} from '../config.guard';
-import {ROUTE_PATHS} from './route-paths';
+import {AUTH_ROUTE_PATHS, ROUTE_PATHS} from './route-paths';
 import {LayoutComponent} from '../shared/layout/layout.component';
 import {config} from 'rxjs';
+import {SignInRedirectComponent} from '../shared/auth/oidc/sign-in-redirect/sign-in-redirect.component';
+import {SignOutRedirectComponent} from '../shared/auth/oidc/sign-out-redirect/sign-out-redirect.component';
+import {AuthGuard} from '../shared/auth/auth.guard';
 
 
 const routes: Routes = [
   { path: ROUTE_PATHS.LAYOUT,
     component: LayoutComponent,
     canActivate: [ConfigGuard],
+    canActivateChild: [AuthGuard],
     runGuardsAndResolvers: 'always',
     children: [
       { path: '', redirectTo: 'news', pathMatch: 'full' },
-      { path: ROUTE_PATHS.NEWS, component: NewsItemsComponent, canActivate: [ConfigGuard], data: { title: 'Quantum News', image: 'News Head Banner'}},
-      { path: ROUTE_PATHS.NEWS + '/:id', component: NewsItemComponent, canActivate: [ConfigGuard] },
-      { path: ROUTE_PATHS.SHOWCASES,  component: ShowcasesComponent, canActivate: [ConfigGuard], data: { title: 'Showcases', image: 'Development Head Banner' }},
-      { path: ROUTE_PATHS.SHOWCASES + '/:id',  component: ShowcaseComponent, canActivate: [ConfigGuard] },
-      { path: ROUTE_PATHS.SEARCH_RESULTS,  component: SearchResultComponent, canActivate: [ConfigGuard] }
+      { path: ROUTE_PATHS.NEWS, component: NewsItemsComponent, data: { title: 'Quantum News', image: 'News Head Banner'}},
+      { path: ROUTE_PATHS.NEWS + '/:id', component: NewsItemComponent },
+      { path: ROUTE_PATHS.SHOWCASES,  component: ShowcasesComponent, data: { title: 'Showcases', image: 'Development Head Banner' }},
+      { path: ROUTE_PATHS.SHOWCASES + '/:id',  component: ShowcaseComponent },
+      { path: ROUTE_PATHS.SEARCH_RESULTS,  component: SearchResultComponent },
     ]
   },
+  { path: "auth", children: [
+      {
+        path: "oidc", children: [
+          {
+            path: AUTH_ROUTE_PATHS.SIGN_IN_REDIRECT, component: SignInRedirectComponent
+          },
+          {
+            path: AUTH_ROUTE_PATHS.SIGN_OUT_REDIRECT, component: SignOutRedirectComponent
+          }
+        ]
+      }
+    ]},
   { path: ROUTE_PATHS.CONFIG,  component: ConfigComponent},
   { path: ROUTE_PATHS.NOT_FOUND, component: NotFoundComponent },
   { path: ROUTE_PATHS.NOT_FOUND_ANY, redirectTo: 'not-found', pathMatch: 'full' }

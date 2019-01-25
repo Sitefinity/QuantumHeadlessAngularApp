@@ -7,3 +7,8 @@ export const ROUTE_PATHS = {
   SEARCH_RESULTS: "search-results",
   CONFIG: "config"
 };
+
+export const AUTH_ROUTE_PATHS = {
+  SIGN_IN_REDIRECT: "sign-in",
+  SIGN_OUT_REDIRECT: "sign-out"
+};

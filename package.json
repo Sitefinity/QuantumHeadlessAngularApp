@@ -3,11 +3,12 @@
   "version": "0.0.0",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve",
+    "start": "npm run copy-auth-assets && ng serve",
     "build": "ng build",
     "test": "ng test",
     "lint": "ng lint",
-    "e2e": "ng e2e"
+    "e2e": "ng e2e",
+    "copy-auth-assets": "cpx \"node_modules/oidc-client/dist/oidc-client.min.js\" \"src/assets/auth\""
   },
   "private": true,
   "dependencies": {
@@ -22,6 +23,7 @@
     "@angular/router": "^6.1.0",
     "core-js": "^2.5.4",
     "ngx-bootstrap": "^3.1.4",
+    "oidc-client": "^1.6.1",
     "rxjs": "~6.2.0",
     "sitefinity-webservices-sdk": "^0.2.54-beta",
     "zone.js": "~0.8.26"

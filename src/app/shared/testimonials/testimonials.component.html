@@ -54,7 +54,7 @@
   <div class="form-group">
     <label for="Company">Photo:</label>
     <input
-      [(ngModel)]="model.Photo"
+      (change)="model.Photo = $event.target.files[0]"
       id="Photo"
       name="Photo"
       type="file">

@@ -9,8 +9,6 @@ const endpoint = '/api/default/';
 export class SitefinityService {
   private sitefinity: any;
   private queryInstance: any;
-  //defines whether everyone or just authenticated users can access the webservices
-  private _hasAuthentication: boolean = false;
 
   get instance(): any {
     if(!this.sitefinity) {
@@ -23,8 +21,12 @@ export class SitefinityService {
     return this.queryInstance;
   }
 
-  get hasAuthentication(): boolean {
-    return this._hasAuthentication;
+  set token(value: any) {
+    this.instance.authentication.setToken(value);
+  }
+
+  get token() {
+    return this.instance.authentication.getToken();
   }
 
   constructor(@Inject('Sitefinity') private sf, private settings: SettingsService) {}

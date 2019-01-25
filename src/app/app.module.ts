@@ -19,6 +19,11 @@ import {LOCAL_STORAGE, StorageService} from './shared/services/storage.service';
 import {LayoutComponent} from './shared/layout/layout.component';
 import { TestimonialsComponent } from './shared/testimonials/testimonials.component';
 import { CarouselModule } from 'ngx-bootstrap/carousel';
+import {OidcProvider, WINDOW_TOKEN} from './shared/auth/oidc/oidc.provider';
+import { SignInRedirectComponent } from './shared/auth/oidc/sign-in-redirect/sign-in-redirect.component';
+import { SignOutRedirectComponent } from './shared/auth/oidc/sign-out-redirect/sign-out-redirect.component';
+import { AUTH_PROVIDER_TOKEN } from './shared/auth/auth.provider';
+import {PathLocationStrategy} from '@angular/common';
 
 @NgModule({
   declarations: [
@@ -33,7 +38,9 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     ShowcaseComponent,
     ConfigComponent,
     LayoutComponent,
-    TestimonialsComponent
+    TestimonialsComponent,
+    SignInRedirectComponent,
+    SignOutRedirectComponent
   ],
   imports: [
     BrowserModule,
@@ -44,8 +51,11 @@ import { CarouselModule } from 'ngx-bootstrap/carousel';
     CarouselModule.forRoot()
   ],
   providers: [
+    PathLocationStrategy,
     { provide: 'Sitefinity', useValue: window['Sitefinity'] },
     { provide: LOCAL_STORAGE, useValue: new StorageService(localStorage) },
+    { provide: WINDOW_TOKEN, useValue: window },
+    { provide: AUTH_PROVIDER_TOKEN, useClass: OidcProvider }
   ],
   bootstrap: [AppComponent]
 })
