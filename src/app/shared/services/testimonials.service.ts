@@ -4,6 +4,8 @@ import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {Testimonial} from '../testimonials/testimonials.component';
 import {DomSanitizer} from '@angular/platform-browser';
 import {SettingsService} from './settings.service';
+import {ImagesService} from './images.service';
+import {Album} from '../news/newsitems/newsitems.component';
 
 export const testimonialDataOptions = {
   urlName: 'testimonials'
@@ -16,7 +18,7 @@ export class TestimonialsService {
   private primitiveFields: {} = {};
   private relationalFields: {} = {};
 
-  constructor(private sitefinity: SitefinityService, private sanitizer: DomSanitizer, private settingsService: SettingsService) { }
+  constructor(private sitefinity: SitefinityService, private sanitizer: DomSanitizer, private settingsService: SettingsService, private imageService: ImagesService) { }
 
   getTestimonials(): Observable<Testimonial[]> {
     const testimonialReplaySubject = new ReplaySubject<Testimonial[]>(1);
@@ -36,29 +38,31 @@ export class TestimonialsService {
     const sortedFields = this.sortFieldValues(testimonial);
     this.primitiveFields = sortedFields.primitives;
     this.relationalFields = sortedFields.relational;
-    this.uploadImage().subscribe((imageId => {
-      const batch = this.sitefinity.instance.batch();
-      const transaction = batch.beginTransaction();
-      const entitySet = 'testimonials';
-      const operation = { action: "Publish" };
-      const itemId = transaction.create({
-        entitySet,
-        data: this.primitiveFields
-      });
+    this.imageService.getLibraryByTitle("Default library").subscribe((library: Album) => {
+      this.uploadImage(library.Id).subscribe((imageId => {
+        const batch = this.sitefinity.instance.batch();
+        const transaction = batch.beginTransaction();
+        const entitySet = 'testimonials';
+        const operation = { action: "Publish" };
+        const itemId = transaction.create({
+          entitySet,
+          data: this.primitiveFields
+        });
 
-      this.associateRelatedImage('Photo', entitySet, itemId, imageId, transaction);
+        this.associateRelatedImage('Photo', entitySet, imageId, itemId, transaction);
 
-      transaction.operation({
-        entitySet: entitySet,
-        key: itemId,
-        data: operation
-      });
+        transaction.operation({
+          entitySet: entitySet,
+          key: itemId,
+          data: operation
+        });
 
-      batch.endTransaction(transaction);
-    }));
+        batch.endTransaction(transaction);
+      }));
+    });
   }
 
-  private uploadImage(): Observable<string> {
+  private uploadImage(libraryId: string): Observable<string> {
     const imageIdSubject = new BehaviorSubject<string>("");
 
     const success = (result) => {
@@ -68,13 +72,22 @@ export class TestimonialsService {
         imageIdSubject.next(data.id);
       }
     };
+    const reject = (result) => {
+debugger;
+    };
 
-    const batch = this.sitefinity.instance.batch(success);
+    const batch = this.sitefinity.instance.batch(success, reject);
     const transaction = batch.beginTransaction();
-    const file = this.relationalFields['Photo'];
+    const file = this.relationalFields['Photo'].file;
     const url = window.URL.createObjectURL(file);
     const safeUrl = this.sanitizer.bypassSecurityTrustUrl(url);
-    const primitives: = this.sortFieldValues(file);
+    const imagePrimitives: ImagePrimitives = {
+      DirectUpload: true,
+      Height: this.relationalFields['Photo'].height,
+      Width: this.relationalFields['Photo'].width,
+      ParentId: libraryId,
+      Title: this.relationalFields['Photo'].file.name
+    };
 
     const uploadedFile = transaction.upload({
       entitySet: "images",
@@ -82,7 +95,7 @@ export class TestimonialsService {
       dataUrl: safeUrl,
       contentType: file.type,
       filename: file.name,
-      uploadProperties: primitives
+      uploadProperties: imagePrimitives
     });
     transaction.operation({
       entitySet: "images",
@@ -91,41 +104,41 @@ export class TestimonialsService {
         action: "Publish"
       }
     });
+    batch.endTransaction(transaction);
+    batch.execute();
 
     return imageIdSubject.asObservable();
   }
 
-  private associateRelatedImage(relationalField: string, entitySet: string, id: any, relationId: string, transaction: any) {
+  private associateRelatedImage(relationalField: string, entitySet: string, itemId: any, relationId: string, transaction: any) {
       transaction.destroyRelated({
         entitySet: entitySet,
-        key: id,
+        key: relationId,
         navigationProperty: relationalField
       });
 
-      const relationArray: Array<any> = this.relationalFields[relationalField];
-      const relationLink = this.settingsService.url + 'sf/system/images(' + relationId + ')';
+      const relatedImageField = this.relationalFields[relationalField];
+      const relationLink = this.settingsService.url + 'sf/system/images(' + itemId + ')';
 
-      if (relationArray) {
-        relationArray.forEach(relation => {
-          transaction.createRelated({
-            entitySet: entitySet,
-            key: id,
-            navigationProperty: relationalField,
-            link: relationLink
-          });
+      if (relatedImageField) {
+        transaction.createRelated({
+          entitySet: entitySet,
+          key: relationId,
+          navigationProperty: relationalField,
+          link: relationLink
         });
       }
   }
 
   private sortFieldValues(obj: any): SortedProperties {
     const sortedFieldValues:SortedProperties = { primitives: {}, relational: {} };
-    Object.keys(obj).forEach(key => {
+    for(let key in obj){
       if(this.isPrimitiveProperty(obj[key])) {
         sortedFieldValues.primitives[key] = obj[key];
       } else {
         sortedFieldValues.relational[key] = obj[key];
       }
-    });
+    }
     return sortedFieldValues;
   }
 
@@ -144,4 +157,12 @@ export class TestimonialsService {
 class SortedProperties {
   primitives: {};
   relational: {};
+}
+
+class ImagePrimitives{
+  DirectUpload: boolean;
+  Height: number;
+  Width: number;
+  ParentId: string;
+  Title: string;
 }

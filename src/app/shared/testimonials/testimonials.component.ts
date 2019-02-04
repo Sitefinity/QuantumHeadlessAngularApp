@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import {Image} from '../news/newsitems/newsitems.component';
 import {TestimonialsService} from '../services/testimonials.service';
 import { CarouselConfig } from 'ngx-bootstrap/carousel';
 import {Observable} from 'rxjs';
@@ -26,6 +25,22 @@ export class TestimonialsComponent implements OnInit {
       this.testimonialsService.createTestimonial(this.model);
     }
   }
+
+  onImageChange(event) {
+    const image = event.target.files[0];
+    let fr = new FileReader();
+    fr.onload = () => {
+      debugger;
+      var img = new Image();
+      img.onload = () => {
+        this.model.Photo = {file: image, width: img.width, height: img.height  }
+      };
+
+      img.src = fr.result;
+    };
+
+    fr.readAsDataURL(image);
+  }
 }
 
 export class Testimonial {
@@ -33,5 +48,11 @@ export class Testimonial {
   Quote: string;
   JobTitle: String;
   Company: string;
-  Photo?: Image;
+  Photo?: TestimonialImage;
+}
+
+export class TestimonialImage {
+  file: any;
+  width: number;
+  height: number;
 }

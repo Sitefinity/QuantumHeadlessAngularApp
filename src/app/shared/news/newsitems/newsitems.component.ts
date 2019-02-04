@@ -112,3 +112,8 @@ export class Image {
   ThumbnailUrl: string;
   Url?: string;
 }
+
+export class Album {
+  Title: string;
+  Id: string;
+}
