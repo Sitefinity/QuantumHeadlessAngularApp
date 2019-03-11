@@ -1,4 +1,13 @@
 <header>
+  <div class="github-banner container-fluid">
+    <div class="container">
+      <div class="row">
+        <div class="col-md-12 text-center">
+          Check out the new <a class="bold github-link" target="_blank" href="https://github.com/Sitefinity/QuantumHeadlessAngularApp"> Sitefinity Headless Sample in GitHub</a>
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="container">
     <div class="row">
       <div class="col-md-9">
@@ -36,9 +45,9 @@
     </div>
   </div>
 </header>
-<main>
+<main class="container-fluid">
   <div class="row">
-    <div class="homepage-card-banner">
+    <div *ngIf="bannerImage | async" class="homepage-card-banner">
       <img *ngIf="bannerImage | async" [alt]="(bannerImage | async).AlternativeText" [src]="(bannerImage | async).Url" [title]="(bannerImage | async).AlternativeText" class="splash">
       <div class="container">
         <div class="homepage-card-banner-text">

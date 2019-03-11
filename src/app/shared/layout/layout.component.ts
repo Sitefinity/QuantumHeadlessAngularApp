@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {Image} from '../news/newsitems/newsitems.component';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {ActivatedRoute, NavigationEnd, Router} from '@angular/router';
+import {ActivatedRoute, NavigationEnd, Router, RoutesRecognized} from '@angular/router';
 import {ImagesService} from '../services/images.service';
 import {Title} from '@angular/platform-browser';
 import {filter, map, mergeMap} from 'rxjs/internal/operators';
@@ -30,12 +30,20 @@ export class LayoutComponent implements OnInit {
       mergeMap((route) => route.data)
     )
       .subscribe((event) => {
-        this.bannerImage = this.imageService.getImageByTitle(event['image']);
-        this.title.next(event['title']);
-        this.titleService.setTitle(event['title']);
+        this.setImageAndTitle(event);
       });
+
+    this.route.url.subscribe(() => {
+      const routeData = this.route.snapshot.firstChild.data;
+      this.setImageAndTitle(routeData);
+    });
 
     this.logoImage = this.imageService.getImageByTitle('Logo_Quantum');
   }
 
+  setImageAndTitle(data: any) {
+    this.bannerImage = this.imageService.getImageByTitle(data['image']);
+    this.title.next(data['title']);
+    this.titleService.setTitle(data['title']);
+  }
 }

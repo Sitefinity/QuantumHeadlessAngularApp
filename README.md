@@ -9,7 +9,18 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 ## Steps of running the application
 
 1. Create a hosted trial (Sitefinity sandbox): https://www.progress.com/sitefinity-cms/try-now/sandbox
-2. Download this repo.
-3. Run the project: 
+2. Verify that your hosted trial is configured properly:
+* Go to Administration -> Settings -> Advanced -> WebServices -> Routes -> Frontend -> Services -> default
+* Set _Access Control Allow Origin (CORS):_ *
+* Go to Authentication -> SecurityTokenService -> IdentityServer -> Clients -> sitefinity -> _Allowed cors origins_
+* Add **http://localhost:4200** and **http://quantum-headless.sitefinity.site**
+
+3. Download this repo.
+4. Run the project: 
   `ng serve`
-4. Enter the url of the Sitefinity sandbox and save.
+5. Enter the url of the Sitefinity sandbox and save.
+
+## Test it online
+
+1. Go to: <a href="http://quantum-headless.sitefinity.site" target="_blank"> http://quantum-headless.sitefinity.site </a>
+2. Enter the url of the Sitefinity sandbox and save.

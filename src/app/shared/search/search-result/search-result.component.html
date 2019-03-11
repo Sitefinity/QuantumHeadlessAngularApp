@@ -1,27 +1,32 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-8 col-md-offset-2 row--border">
+    <div class="row--border">
       <ng-container *ngIf="(searchResults | async) && (searchResults | async).length > 0">
-        <div class="text-center">
-          <h1>Search Results</h1>
+        <div class="mt-3 col-md-12">
+          <h3>{{(searchResults | async).length}} results for <em>{{searchTerm}}</em></h3>
         </div>
-        <div class="sf-search-results media-list u-mb4">
-          <div *ngFor="let result of (searchResults | async)" class="media sf-media u-mb3">
-            <div *ngIf="result.ImageUrl" class="media-left sf-img-thmb">
-              <a [attr.href]="result.ImageUrl"><img [src]="result.ImageUrl" [alt]="result.Title"/></a>
-            </div>
-            <div class="media-body sf-media-body">
-              <h3><a [routerLink]="result.DetailLink" style="cursor: pointer;">{{result.Title}}</a></h3>
-              <p [innerHtml]="result.Content"></p>
-              <a *ngIf="result.DetailLink" [routerLink]="result.DetailLink" style="cursor: pointer;">Read more</a>
-              <a *ngIf="result.ImageUrl" [attr.href]="result.ImageUrl" style="cursor: pointer;">{{result.ImageUrl}}</a>
+        <div class="col-md-12">
+          <div class="sf-search-results media-list u-mb4 mt-3">
+            <div *ngFor="let result of (searchResults | async)" class="media sf-media u-mb3">
+              <div *ngIf="result.ImageUrl" class="media-left sf-img-thmb">
+                <a [attr.href]="result.ImageUrl"><img [src]="result.ImageUrl" [alt]="result.Title"/></a>
+              </div>
+              <div class="media-body sf-media-body">
+                <h3>
+                  <a *ngIf="result.DetailLink" [routerLink]="result.DetailLink" style="cursor: pointer;">{{result.Title}}</a>
+                  <a *ngIf="result.ImageUrl" [attr.href]="result.ImageUrl" style="cursor: pointer;">{{result.Title}}</a>
+                </h3>
+                <p *ngIf="result.Content" [innerHtml]="result.Content"></p>
+                <a *ngIf="result.DetailLink" [routerLink]="result.DetailLink" style="cursor: pointer;">{{settings.url + result.DetailLink}}</a>
+                <a *ngIf="result.ImageUrl" [attr.href]="result.ImageUrl" style="cursor: pointer;">{{result.ImageUrl}}</a>
+              </div>
             </div>
           </div>
         </div>
       </ng-container>
       <ng-container *ngIf="(searchResults | async) && (searchResults | async).length === 0">
-        <div class="text-center">
-            <h1>No search results</h1>
+        <div class="mt-3 col-md-12">
+            <h3>No search results</h3>
         </div>
       </ng-container>
     </div>

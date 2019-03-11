@@ -26,10 +26,10 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'news', pathMatch: 'full' },
       { path: ROUTE_PATHS.NEWS, component: NewsItemsComponent, data: { title: 'Quantum News', image: 'News Head Banner'}},
-      { path: ROUTE_PATHS.NEWS + '/:id', component: NewsItemComponent },
+      { path: ROUTE_PATHS.NEWS + '/:id', component: NewsItemComponent},
       { path: ROUTE_PATHS.SHOWCASES,  component: ShowcasesComponent, data: { title: 'Showcases', image: 'Development Head Banner' }},
-      { path: ROUTE_PATHS.SHOWCASES + '/:id',  component: ShowcaseComponent },
-      { path: ROUTE_PATHS.SEARCH_RESULTS,  component: SearchResultComponent },
+      { path: ROUTE_PATHS.SHOWCASES + '/:id',  component: ShowcaseComponent},
+      { path: ROUTE_PATHS.SEARCH_RESULTS + '/:searchTerm',  component: SearchResultComponent, data: { title: 'Search results', image: 'Forums Head Banner'} }
     ]
   },
   { path: "auth", children: [

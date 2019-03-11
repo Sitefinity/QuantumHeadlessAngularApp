@@ -24,9 +24,9 @@
 
         <div *ngIf="shouldShowLoadMore" class="load-more text-center u-mt4">
           <a (click)="LoadMore()" style="cursor: pointer;">
-            <span class="glyphicon glyphicon-chevron-down glyph-bordered"></span>
-            <br />
             Load 10 more news
+            <br />
+            <span class="glyphicon glyphicon-chevron-down glyph-bordered"></span>
           </a>
         </div>
       </div>
@@ -61,7 +61,7 @@
         </a>
       </h4>
       <span class="text-muted">
-        {{newsItem.DateCreated}} <br>
+        {{newsItem.DateCreated | date: 'medium'}} <br>
          by
         {{newsItem.Author}}
     </span>
