@@ -1,0 +1,39 @@
+<div class="sf-Comments">
+  <div *ngIf="comments" class="row sf-Comments-header">
+    <div class="col-md-7">
+      <h3>
+        <span class="comments-total-count">{{commentsCount}} </span>
+        <span class="comments-header">{{commentsCount === 1 ? 'comment' : 'comments'}}</span>
+      </h3>
+    </div>
+  </div>
+  <div class="media-list sf-Comments-list">
+    <div class="media sf-media" *ngFor="let comment of comments">
+      <div class="media-left sf-img-thmb"><img [src]="comment.ProfilePictureUrl" alt="author"></div>
+      <div class="media-body sf-media-body">
+        <span class="text-muted sf-Comments-list-author">{{comment.Name}}</span>
+
+        <span class="text-muted pl-05">{{comment.DateCreated | date:'medium'}}</span>
+        <p>{{comment.Message}}</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="media sf-media">
+    <div *ngIf="model.ProfilePictureUrl" class="media-left sf-img-thmb">
+      <img [src]="model.ProfilePictureUrl" alt="" width="40" height="40">
+    </div>
+    <div class="media-body sf-media-body">
+      <form *ngIf="showCommentsForm" #f="ngForm" (ngSubmit)="submitComment(f)" class="form-group">
+        <div class="form-group">
+          <label class="sr-only">Leave a comment</label>
+          <textarea [(ngModel)]="model.Message" name="message" class="form-control" placeholder="Leave a comment"></textarea>
+        </div>
+        <div>
+          <button class="btn btn-primary">Submit</button>
+          <div *ngIf="creatingComment" class="sf-loading mt-1"><span></span></div>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>

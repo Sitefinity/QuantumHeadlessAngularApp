@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
-import {SitefinityService} from './sitefinity.service';
-import {Observable, ReplaySubject} from 'rxjs';
+import {endpoint, SitefinityService} from './sitefinity.service';
+import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
 import {Album, Image} from '../news/newsitems/newsitems.component';
+import {SettingsService} from './settings.service';
+import {DomSanitizer} from '@angular/platform-browser';
 
 export const imageDataOptions = {
   urlName: 'images',
@@ -16,7 +18,7 @@ export const albumDataOptions = {
 })
 export class ImagesService {
 
-  constructor(private sitefinity: SitefinityService) { }
+  constructor(private sitefinity: SitefinityService,  private settingsService: SettingsService, private sanitizer: DomSanitizer) { }
 
   getImageByTitle(title: string): Observable<Image>{
     const replaySubjectImage = new ReplaySubject<Image>(1);
@@ -47,4 +49,128 @@ export class ImagesService {
     });
     return replaySubjectLibrary.asObservable();
   }
+
+  public uploadImage(libraryId: string, imageProperties: any ): Observable<any> {
+    let upload = {success: false, failure: false, result: null, errorMessage: null };
+    const resultSubject = new BehaviorSubject(upload);
+
+    const success = (result) => {
+      const { data } = result.data[0].response[0];
+
+      if (result.isSuccessful) {
+        this.sitefinity.instance.data({ urlName: 'images', providerName: 'OpenAccessDataProvider', cultureName: 'en' })
+          .getSingle({
+            key: data.Id,
+            successCb: (result) => {
+              upload.result = result;
+              upload.success = true;
+              resultSubject.next(upload);
+              resultSubject.complete();
+            },
+            failureCb: () => {
+              upload.failure = true;
+              resultSubject.next(upload);
+            }
+          });
+      } else {
+        upload.failure = true;
+        upload.errorMessage = data.error;
+        resultSubject.next(upload);
+      }
+    };
+    const reject = (result) => {
+      upload.failure = true;
+      resultSubject.next(upload);
+    };
+
+    const progress = () => {};
+
+    const batch = this.sitefinity.instance.batch(success, reject, progress, {
+      providerName: "OpenAccessDataProvider",
+      cultureName: "en"
+    });
+
+    const transaction = batch.beginTransaction();
+    const file = imageProperties.file;
+    const url = window.URL.createObjectURL(file);
+    const safeUrl = this.sanitizer.bypassSecurityTrustUrl(url);
+    const imagePrimitives: ImagePrimitives = {
+      ParentId: libraryId,
+      DirectUpload: true,
+      Height: imageProperties.height,
+      Width: imageProperties.width,
+      Title: imageProperties.file.name
+    };
+
+    const uploadedFile = transaction.upload({
+      entitySet: "images",
+      data: file,
+      dataUrl: safeUrl,
+      contentType: file.type,
+      fileName: file.name,
+      uploadProperties: imagePrimitives
+    });
+
+    transaction.operation({
+      entitySet: "images",
+      key: uploadedFile,
+      data: {
+        action: "Publish"
+      }
+    });
+    batch.endTransaction(transaction);
+    batch.execute();
+
+    return resultSubject.asObservable();
+    }
+
+  public associateRelatedImage(relationalField: {}, entitySet: string, itemId: any, relationId: string, transaction: any) {
+      transaction.destroyRelated({
+        entitySet: entitySet,
+        key: relationId,
+        navigationProperty: "Photo"
+      });
+      const relationLink = this.settingsService.url + endpoint + 'images(' + itemId + ')';
+
+      transaction.createRelated({
+        entitySet: entitySet,
+        key: relationId,
+        navigationProperty: "Photo",
+        link: relationLink
+    });
+  }
+
+  public sortFieldValues(obj: any): SortedProperties {
+    const sortedFieldValues:SortedProperties = { primitives: {}, relational: {} };
+    for(let key in obj){
+      if(this.isPrimitiveProperty(obj[key])) {
+        sortedFieldValues.primitives[key] = obj[key];
+      } else {
+        sortedFieldValues.relational[key] = obj[key];
+      }
+    }
+    return sortedFieldValues;
+  }
+
+  private isPrimitiveProperty(property: any) {
+    return !this.isObject(property);
+  }
+
+  private isObject(val) {
+    if (val === null) { return false;}
+    return ( (typeof val === 'function') || (typeof val === 'object') );
+  }
+}
+
+class ImagePrimitives{
+  DirectUpload: boolean;
+  Height: number;
+  Width: number;
+  ParentId: string;
+  Title: string;
+}
+
+class SortedProperties {
+  primitives: {};
+  relational: {};
 }

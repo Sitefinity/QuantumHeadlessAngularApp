@@ -1,5 +1,5 @@
 import {Inject, Injectable, InjectionToken} from '@angular/core';
-import {AuthProvider, Token} from '../auth.provider';
+import {AuthProvider, QuantumUser, Token} from '../auth.provider';
 import {UserManager, User} from 'oidc-client';
 import {SettingsService} from '../../services/settings.service';
 import {of as observableOf, from as observableFrom, combineLatest as observableCombineLatest, Observable, ReplaySubject} from 'rxjs';
@@ -88,6 +88,10 @@ export class OidcProvider implements AuthProvider {
     }), catchError(() => {
       return observableOf(false);
     }));
+  }
+
+  getUser(): Observable<QuantumUser> {
+    return observableFrom(this.manager.getUser()).pipe(map( user => {return { Username: user.profile.preferred_username, Picture: user.profile.picture}} ));
   }
 
   getToken(): Observable<Token> {

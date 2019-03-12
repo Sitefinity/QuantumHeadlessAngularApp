@@ -34,6 +34,10 @@ export class AuthService {
     return this.provider.isLoggedIn();
   }
 
+  getUser(): Observable<any> {
+    return this.provider.getUser();
+  }
+
   getProvider(): Observable<AuthProvider> {
     let availableProv = null;
     const ready = new ReplaySubject<AuthProvider>(1);

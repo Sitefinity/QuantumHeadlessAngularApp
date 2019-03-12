@@ -1,7 +1,8 @@
 import {Inject, Injectable} from '@angular/core';
 import {SettingsService} from './settings.service';
 
-const endpoint = '/api/default/';
+export const endpoint = '/sf/system/';
+// export const endpoint = '/api/default/';
 
 @Injectable({
   providedIn: 'root'

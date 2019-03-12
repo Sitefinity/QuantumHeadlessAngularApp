@@ -1,24 +1,23 @@
 import { Injectable } from '@angular/core';
 import {SitefinityService} from './sitefinity.service';
-import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
+import {Observable, ReplaySubject} from 'rxjs';
 import {Testimonial} from '../testimonials/testimonials.component';
-import {DomSanitizer} from '@angular/platform-browser';
-import {SettingsService} from './settings.service';
 import {ImagesService} from './images.service';
-import {Album} from '../news/newsitems/newsitems.component';
 
 export const testimonialDataOptions = {
-  urlName: 'testimonials'
+  urlName: 'testimonials',
+  providerName: "dynamicProvider5",
+  cultureName: "en"
 };
 
 @Injectable({
   providedIn: 'root'
 })
 export class TestimonialsService {
-  private primitiveFields: {} = {};
-  private relationalFields: {} = {};
 
-  constructor(private sitefinity: SitefinityService, private sanitizer: DomSanitizer, private settingsService: SettingsService, private imageService: ImagesService) { }
+  constructor(
+    private sitefinity: SitefinityService,
+    private imageService: ImagesService) { }
 
   getTestimonials(): Observable<Testimonial[]> {
     const testimonialReplaySubject = new ReplaySubject<Testimonial[]>(1);
@@ -34,135 +33,50 @@ export class TestimonialsService {
     return testimonialReplaySubject.asObservable();
   }
 
-  createTestimonial(testimonial: Testimonial):void {
-    const sortedFields = this.sortFieldValues(testimonial);
-    this.primitiveFields = sortedFields.primitives;
-    this.relationalFields = sortedFields.relational;
-    this.imageService.getLibraryByTitle("Default library").subscribe((library: Album) => {
-      this.uploadImage(library.Id).subscribe((imageId => {
-        const batch = this.sitefinity.instance.batch();
-        const transaction = batch.beginTransaction();
-        const entitySet = 'testimonials';
-        const operation = { action: "Publish" };
-        const itemId = transaction.create({
-          entitySet,
-          data: this.primitiveFields
-        });
+  createTestimonial(testimonial: Testimonial):Observable<boolean> {
+    const isTestimonialCreated = new ReplaySubject<boolean>(1);
+    const sortedFields = this.imageService.sortFieldValues(testimonial);
+    const primitiveFields = sortedFields.primitives;
+    const relationalFields = sortedFields.relational;
 
-        this.associateRelatedImage('Photo', entitySet, imageId, itemId, transaction);
+    this.imageService.getLibraryByTitle('Default library').subscribe((library: any) => {
+      let parentId = library.RootId ? library.RootId : library.Id;
+      this.imageService.uploadImage(parentId, relationalFields['Photo']).subscribe((upload => {
+        if (upload.success) {
+          const success = (result) => {
+            if(result.isSuccessful) {
+              isTestimonialCreated.next(true);
+            } else {
+              isTestimonialCreated.next(false);
+            }
+          };
+          const failure = () => {
+            isTestimonialCreated.next(false);
+          };
+          const batch = this.sitefinity.instance.batch(success, failure, { providerName: testimonialDataOptions.providerName, cultureName: testimonialDataOptions.cultureName });
+          const transaction = batch.beginTransaction();
+          const entitySet = 'testimonials';
+          const operation = { action: 'Publish' };
+          const testimonialItemId = transaction.create({
+            entitySet,
+            data: primitiveFields
+          });
 
-        transaction.operation({
-          entitySet: entitySet,
-          key: itemId,
-          data: operation
-        });
+          this.imageService.associateRelatedImage(relationalFields['Photo'], entitySet, upload.result.Id, testimonialItemId, transaction);
 
-        batch.endTransaction(transaction);
+          transaction.operation({
+            entitySet: entitySet,
+            key: testimonialItemId,
+            data: operation
+          });
+
+          batch.endTransaction(transaction);
+          batch.execute();
+        }
       }));
     });
+    return isTestimonialCreated.asObservable();
   }
-
-  private uploadImage(libraryId: string): Observable<string> {
-    const imageIdSubject = new BehaviorSubject<string>("");
-
-    const success = (result) => {
-      const { data } = result.data[0].response[0];
-
-      if (result.isSuccessful) {
-        imageIdSubject.next(data.id);
-      }
-    };
-    const reject = (result) => {
-debugger;
-    };
-
-    const batch = this.sitefinity.instance.batch(success, reject);
-    const transaction = batch.beginTransaction();
-    const file = this.relationalFields['Photo'].file;
-    const url = window.URL.createObjectURL(file);
-    const safeUrl = this.sanitizer.bypassSecurityTrustUrl(url);
-    const imagePrimitives: ImagePrimitives = {
-      DirectUpload: true,
-      Height: this.relationalFields['Photo'].height,
-      Width: this.relationalFields['Photo'].width,
-      ParentId: libraryId,
-      Title: this.relationalFields['Photo'].file.name
-    };
-
-    const uploadedFile = transaction.upload({
-      entitySet: "images",
-      data: file,
-      dataUrl: safeUrl,
-      contentType: file.type,
-      filename: file.name,
-      uploadProperties: imagePrimitives
-    });
-    transaction.operation({
-      entitySet: "images",
-      key: uploadedFile,
-      data: {
-        action: "Publish"
-      }
-    });
-    batch.endTransaction(transaction);
-    batch.execute();
-
-    return imageIdSubject.asObservable();
-  }
-
-  private associateRelatedImage(relationalField: string, entitySet: string, itemId: any, relationId: string, transaction: any) {
-      transaction.destroyRelated({
-        entitySet: entitySet,
-        key: relationId,
-        navigationProperty: relationalField
-      });
-
-      const relatedImageField = this.relationalFields[relationalField];
-      const relationLink = this.settingsService.url + 'sf/system/images(' + itemId + ')';
-
-      if (relatedImageField) {
-        transaction.createRelated({
-          entitySet: entitySet,
-          key: relationId,
-          navigationProperty: relationalField,
-          link: relationLink
-        });
-      }
-  }
-
-  private sortFieldValues(obj: any): SortedProperties {
-    const sortedFieldValues:SortedProperties = { primitives: {}, relational: {} };
-    for(let key in obj){
-      if(this.isPrimitiveProperty(obj[key])) {
-        sortedFieldValues.primitives[key] = obj[key];
-      } else {
-        sortedFieldValues.relational[key] = obj[key];
-      }
-    }
-    return sortedFieldValues;
-  }
-
-  private isPrimitiveProperty(property: any) {
-    return !this.isObject(property);
-  }
-
-
-  private isObject(val) {
-    if (val === null) { return false;}
-    return ( (typeof val === 'function') || (typeof val === 'object') );
-  }
-
 }
 
-class SortedProperties {
-  primitives: {};
-  relational: {};
-}
 
-class ImagePrimitives{
-  DirectUpload: boolean;
-  Height: number;
-  Width: number;
-  ParentId: string;
-  Title: string;
-}

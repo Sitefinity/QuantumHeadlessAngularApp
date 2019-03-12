@@ -6,6 +6,7 @@ export interface AuthProvider {
   signIn(returnUrl: string): Observable<void>;
   signOut(): Observable<void>;
   isLoggedIn(): Observable<boolean>;
+  getUser(): Observable<any>;
   getToken(): Observable<Token>;
   isAvailable(): Observable<boolean>;
 }
@@ -13,4 +14,9 @@ export interface AuthProvider {
 export interface Token {
   type: string,
   value: string
+}
+
+export class QuantumUser {
+  Username: string;
+  Picture: string;
 }

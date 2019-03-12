@@ -24,6 +24,7 @@ import { SignInRedirectComponent } from './shared/auth/oidc/sign-in-redirect/sig
 import { SignOutRedirectComponent } from './shared/auth/oidc/sign-out-redirect/sign-out-redirect.component';
 import { AUTH_PROVIDER_TOKEN } from './shared/auth/auth.provider';
 import {PathLocationStrategy} from '@angular/common';
+import {CommentsComponent} from './shared/comments/comments.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import {PathLocationStrategy} from '@angular/common';
     LayoutComponent,
     TestimonialsComponent,
     SignInRedirectComponent,
-    SignOutRedirectComponent
+    SignOutRedirectComponent,
+    CommentsComponent
   ],
   imports: [
     BrowserModule,

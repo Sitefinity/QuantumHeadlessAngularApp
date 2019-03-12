@@ -42,6 +42,9 @@ list a {
 .mb-5 {
   margin-bottom: 5%;
 }
+.mt-1 {
+  margin-top: 10px;
+}
 .github-banner {
   padding: 5px 15px;
   color: #fff;
@@ -64,4 +67,10 @@ list a {
 }
 .github-link:hover {
   color: #ffae00;
+}
+.pl-05 {
+  padding-left: 5px;
+}
+.testimonial-quote {
+  min-height: 260px;
 }

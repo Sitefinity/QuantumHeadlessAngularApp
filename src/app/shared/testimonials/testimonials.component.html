@@ -19,8 +19,8 @@
     </div>
   </slide>
 </carousel>
-<div class="center-text">
-  <button class="btn btn-primary btn-quantum-homepage" (click)="showTestimonialForm=!showTestimonialForm" type="button">Submit a testimonial</button>
+<div class="center-text form-group">
+  <button class="btn btn-primary btn-quantum-homepage" (click)="openTestimonialForm()" type="button">Submit a testimonial</button>
 </div>
 <form *ngIf="showTestimonialForm" #f="ngForm" (ngSubmit)="submitTestimonial(f)">
   <div class="form-group">
@@ -69,5 +69,9 @@
       name="Quote"></textarea>
   </div>
   <button type="submit" class="btn btn-primary btn-quantum-homepage">Submit</button>
+  <div *ngIf="creatingTestimonial" class="sf-loading mt-1"><span></span></div>
 </form>
+<div class="alert alert-info" *ngIf="createdTestimonialMessage">
+  {{createdTestimonialMessage}}
+</div>
 
