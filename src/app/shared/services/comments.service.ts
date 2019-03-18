@@ -2,8 +2,6 @@ import { Injectable } from '@angular/core';
 import {SitefinityService} from './sitefinity.service';
 import { Observable, ReplaySubject } from 'rxjs';
 import { Comment } from '../comments/comments.component';
-import {ContentService, DataOptions} from './content.service';
-import {SettingsService} from './settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,4 +38,10 @@ export class CommentsService {
 
     return isCommentCreated.asObservable();
   }
+}
+
+export class DataOptions {
+  urlName: string;
+  providerName: string;
+  cultureName: string;
 }
