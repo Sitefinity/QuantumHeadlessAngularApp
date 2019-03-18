@@ -19,12 +19,12 @@
     </div>
   </div>
 
-  <div class="media sf-media">
+  <div *ngIf="showCommentsForm" class="media sf-media">
     <div *ngIf="model.ProfilePictureUrl" class="media-left sf-img-thmb">
       <img [src]="model.ProfilePictureUrl" alt="" width="40" height="40">
     </div>
     <div class="media-body sf-media-body">
-      <form *ngIf="showCommentsForm" #f="ngForm" (ngSubmit)="submitComment(f)" class="form-group">
+      <form #f="ngForm" (ngSubmit)="submitComment(f)" class="form-group">
         <div class="form-group">
           <label class="sr-only">Leave a comment</label>
           <textarea [(ngModel)]="model.Message" name="message" class="form-control" placeholder="Leave a comment"></textarea>
@@ -36,4 +36,5 @@
       </form>
     </div>
   </div>
+  <div *ngIf="!showCommentsForm" class="alert alert-info">Please <a (click)="login()">log in</a> to comment</div>
 </div>

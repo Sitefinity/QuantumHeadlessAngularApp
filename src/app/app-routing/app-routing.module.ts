@@ -15,13 +15,13 @@ import {config} from 'rxjs';
 import {SignInRedirectComponent} from '../shared/auth/oidc/sign-in-redirect/sign-in-redirect.component';
 import {SignOutRedirectComponent} from '../shared/auth/oidc/sign-out-redirect/sign-out-redirect.component';
 import {AuthGuard} from '../shared/auth/auth.guard';
+import {TestimonialFormComponent} from '../shared/testimonials/testimonial-form/testimonial-form.component';
 
 
 const routes: Routes = [
   { path: ROUTE_PATHS.LAYOUT,
     component: LayoutComponent,
     canActivate: [ConfigGuard],
-    canActivateChild: [AuthGuard],
     runGuardsAndResolvers: 'always',
     children: [
       { path: '', redirectTo: 'news', pathMatch: 'full' },
@@ -29,7 +29,8 @@ const routes: Routes = [
       { path: ROUTE_PATHS.NEWS + '/:id', component: NewsItemComponent},
       { path: ROUTE_PATHS.SHOWCASES,  component: ShowcasesComponent, data: { title: 'Showcases', image: 'Development Head Banner' }},
       { path: ROUTE_PATHS.SHOWCASES + '/:id',  component: ShowcaseComponent},
-      { path: ROUTE_PATHS.SEARCH_RESULTS + '/:searchTerm',  component: SearchResultComponent, data: { title: 'Search results', image: 'Forums Head Banner'} }
+      { path: ROUTE_PATHS.SEARCH_RESULTS + '/:searchTerm',  component: SearchResultComponent, data: { title: 'Search results', image: 'Forums Head Banner'} },
+      { path: ROUTE_PATHS.SUBMIT_TESTIMONIAL, component: TestimonialFormComponent, canActivate: [AuthGuard]}
     ]
   },
   { path: "auth", children: [

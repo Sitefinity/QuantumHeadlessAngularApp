@@ -72,6 +72,8 @@ export class TestimonialsService {
 
           batch.endTransaction(transaction);
           batch.execute();
+        } else {
+          isTestimonialCreated.next(false);
         }
       }));
     });

@@ -2,6 +2,7 @@ export const ROUTE_PATHS = {
   LAYOUT: "",
   NEWS: "news",
   SHOWCASES: "showcases",
+  SUBMIT_TESTIMONIAL: "testimonial",
   NOT_FOUND: "**",
   NOT_FOUND_ANY: "**",
   SEARCH_RESULTS: "search-results",

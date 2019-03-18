@@ -22,56 +22,5 @@
 <div class="center-text form-group">
   <button class="btn btn-primary btn-quantum-homepage" (click)="openTestimonialForm()" type="button">Submit a testimonial</button>
 </div>
-<form *ngIf="showTestimonialForm" #f="ngForm" (ngSubmit)="submitTestimonial(f)">
-  <div class="form-group">
-    <label for="Author">Author:</label>
-    <input
-      [(ngModel)]="model.TestimonialAuthor"
-      class="form-control"
-      required
-      id="Author"
-      type="text"
-      name="Author">
-  </div>
-  <div class="form-group">
-    <label for="JobTitle">Job Title:</label>
-    <input
-      class="form-control"
-      [(ngModel)]="model.JobTitle"
-      id="JobTitle"
-      name="JobTitle"
-      type="text">
-  </div>
-  <div class="form-group">
-    <label for="Company">Company:</label>
-    <input
-      [(ngModel)]="model.Company"
-      class="form-control"
-      id="Company"
-      name="Company"
-      type="text">
-  </div>
-  <div class="form-group">
-    <label for="Company">Photo:</label>
-    <input
-      (change)="onImageChange($event)"
-      id="Photo"
-      name="Photo"
-      type="file">
-  </div>
-  <div class="form-group">
-    <label for="Quote">Quote:</label>
-    <textarea
-      [(ngModel)]="model.Quote"
-      class="form-control"
-      required
-      id="Quote"
-      name="Quote"></textarea>
-  </div>
-  <button type="submit" class="btn btn-primary btn-quantum-homepage">Submit</button>
-  <div *ngIf="creatingTestimonial" class="sf-loading mt-1"><span></span></div>
-</form>
-<div class="alert alert-info" *ngIf="createdTestimonialMessage">
-  {{createdTestimonialMessage}}
-</div>
+
 

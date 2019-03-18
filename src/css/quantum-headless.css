@@ -33,6 +33,9 @@ list a {
 .mt-3 {
   margin-top: 30px !important;
 }
+.mt-6 {
+  margin-top: 60px !important;
+}
 .ml-2 {
   margin-left: 20px;
 }
@@ -73,4 +76,7 @@ list a {
 }
 .testimonial-quote {
   min-height: 260px;
+}
+.container.container-small {
+  width: 800px;
 }

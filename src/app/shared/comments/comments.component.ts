@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {AuthService} from '../auth/auth.service';
 import {CommentsService} from '../services/comments.service';
 import {newsItemsDataOptions} from '../services/news.service';
-import {SettingsService} from '../services/settings.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-comments',
@@ -17,17 +17,19 @@ export class CommentsComponent implements OnInit {
   creatingComment: boolean;
   model: Comment = new Comment();
 
-  constructor(private authService: AuthService, private commentsService: CommentsService, private settingsService: SettingsService) {}
+  constructor(private authService: AuthService, private commentsService: CommentsService, private router: Router) {}
 
   ngOnInit() {
-    this.authService.isLoggedIn().subscribe((isLoggedIn) => {
-      if(isLoggedIn) {
-        this.showCommentsForm = true;
-        this.authService.getUser().subscribe((user) => {
-          this.model.Name = user.Username;
-          this.model.ProfilePictureUrl = user.Picture;
-        });
-      }
+    this.authService.init().subscribe(() => {
+      this.authService.isLoggedIn().subscribe((isLoggedIn) => {
+        if(isLoggedIn) {
+          this.showCommentsForm = true;
+          this.authService.getUser().subscribe((user) => {
+            this.model.Name = user.Username;
+            this.model.ProfilePictureUrl = user.Picture;
+          });
+        }
+      });
     });
     this.getComments();
   }
@@ -56,6 +58,12 @@ export class CommentsComponent implements OnInit {
         this.model.Message = null;
         this.creatingComment = false;
       }
+    });
+  }
+
+  login() {
+    this.authService.init().subscribe(() => {
+      this.authService.signIn(this.router.routerState.snapshot.url).subscribe();
     });
   }
 }

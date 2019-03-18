@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import {TestimonialsService} from '../services/testimonials.service';
 import { CarouselConfig } from 'ngx-bootstrap/carousel';
 import {Observable} from 'rxjs';
+import {Router} from '@angular/router';
+import {ROUTE_PATHS} from '../../app-routing/route-paths';
 
 @Component({
   selector: 'app-testimonials',
@@ -12,58 +14,26 @@ import {Observable} from 'rxjs';
 })
 export class TestimonialsComponent implements OnInit {
   testimonials: Observable<Testimonial[]>;
-  model: Testimonial = new Testimonial();
-  showTestimonialForm:boolean = false;
-  createdTestimonialMessage: string = null;
-  creatingTestimonial: boolean;
 
-  constructor(private testimonialsService: TestimonialsService) { }
+  constructor(private testimonialsService: TestimonialsService, private router: Router) { }
 
   ngOnInit() {
     this.getTestimonials();
   }
 
   openTestimonialForm() {
-    this.showTestimonialForm = !this.showTestimonialForm;
-    this.createdTestimonialMessage = null;
-  }
-
-  submitTestimonial(testimonialForm: any) {
-    if (testimonialForm.valid) {
-      this.creatingTestimonial = true;
-      this.testimonialsService.createTestimonial(this.model).subscribe(isCreated => {
-        this.creatingTestimonial = false;
-        if(isCreated) {
-          this.createdTestimonialMessage = "Thank you for your testimonial!";
-          this.showTestimonialForm = false;
-          this.getTestimonials();
-          this.model = new Testimonial();
-        } else {
-          this.createdTestimonialMessage = "Whoops! Something went wrong";
-          this.showTestimonialForm = true;
-        }
-      });
-    }
+    this.router.navigate([ROUTE_PATHS.SUBMIT_TESTIMONIAL]);
   }
 
   private getTestimonials(): void {
     this.testimonials = this.testimonialsService.getTestimonials();
   }
+}
 
-  onImageChange(event) {
-    const image = event.target.files[0];
-    let fr = new FileReader();
-    fr.onload = () => {
-      var img = new Image();
-      img.onload = () => {
-        this.model.Photo = {file: image, width: img.width, height: img.height  }
-      };
-
-      img.src = fr.result;
-    };
-
-    fr.readAsDataURL(image);
-  }
+export class TestimonialImage {
+  file: any;
+  width: number;
+  height: number;
 }
 
 export class Testimonial {
@@ -72,10 +42,4 @@ export class Testimonial {
   JobTitle: String;
   Company: string;
   Photo?: TestimonialImage;
-}
-
-export class TestimonialImage {
-  file: any;
-  width: number;
-  height: number;
 }
