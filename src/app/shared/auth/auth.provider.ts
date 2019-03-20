@@ -8,7 +8,6 @@ export interface AuthProvider {
   isLoggedIn(): Observable<boolean>;
   getUser(): Observable<any>;
   getToken(): Observable<Token>;
-  isAvailable(): Observable<boolean>;
 }
 
 export interface Token {

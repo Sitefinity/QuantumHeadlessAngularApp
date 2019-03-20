@@ -39,14 +39,9 @@ export class AuthService {
   }
 
   getProvider(): Observable<AuthProvider> {
-    let availableProv = null;
     const ready = new ReplaySubject<AuthProvider>(1);
 
-    if (this.oidcProvider.isAvailable()) {
-        availableProv = this.oidcProvider;
-    }
-
-    this.initProvider(ready, availableProv);
+    this.initProvider(ready, this.oidcProvider);
     return ready.asObservable();
   }
 

@@ -98,15 +98,6 @@ export class OidcProvider implements AuthProvider {
     return this.token.asObservable();
   }
 
-  isAvailable(): Observable<boolean> {
-    const url = this.settings.authority + "/.well-known/openid-configuration";
-    return this.http.get(url, { observe: "response", responseType: "text" }).pipe(map(x => {
-      const header = x.headers.get("content-type");
-
-      return header && header.startsWith("application/json");
-    }));
-  }
-
   private authenticateSilent(returnUrl: string): Observable<void> {
     const signInSilent = observableFrom(this.manager.signinSilent());
     signInSilent.subscribe(() => {

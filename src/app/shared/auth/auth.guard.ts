@@ -25,8 +25,4 @@ export class AuthGuard implements CanActivate {
 
     return isLoggedInSubject.asObservable();
   }
-
-  canActivateChild(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean> | boolean {
-    return this.canActivate(route, state);
-  }
 }
