@@ -62,7 +62,7 @@ export class TestimonialsService {
             data: primitiveFields
           });
 
-          this.imageService.associateRelatedImage(relationalFields['Photo'], entitySet, upload.result.Id, testimonialItemId, transaction);
+          this.imageService.associateRelatedImage('Photo', relationalFields['Photo'], entitySet, upload.result.Id, testimonialItemId, transaction);
 
           transaction.operation({
             entitySet: entitySet,
