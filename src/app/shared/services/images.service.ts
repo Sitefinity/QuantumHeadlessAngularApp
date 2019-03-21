@@ -52,26 +52,16 @@ export class ImagesService {
 
   public uploadImage(libraryId: string, imageProperties: any ): Observable<any> {
     let upload = {success: false, failure: false, result: null, errorMessage: null };
-    const resultSubject = new BehaviorSubject(upload);
+    const resultSubject = new ReplaySubject<any>(1);
 
     const success = (result) => {
       const { data } = result.data[0].response[0];
 
       if (result.isSuccessful) {
-        this.sitefinity.instance.data({ urlName: 'images', providerName: 'OpenAccessDataProvider', cultureName: 'en' })
-          .getSingle({
-            key: data.Id,
-            successCb: (result) => {
-              upload.result = result;
-              upload.success = true;
-              resultSubject.next(upload);
-              resultSubject.complete();
-            },
-            failureCb: () => {
-              upload.failure = true;
-              resultSubject.next(upload);
-            }
-          });
+        upload.result = data;
+        upload.success = true;
+        resultSubject.next(upload);
+        resultSubject.complete();
       } else {
         upload.failure = true;
         upload.errorMessage = data.error;
@@ -124,18 +114,18 @@ export class ImagesService {
     return resultSubject.asObservable();
     }
 
-  public associateRelatedImage(relationalField: {}, entitySet: string, itemId: any, relationId: string, transaction: any) {
+  public associateRelatedImage(relationalFieldName: string, relationalField: {}, entitySet: string, itemId: any, relationId: string, transaction: any) {
       transaction.destroyRelated({
         entitySet: entitySet,
         key: relationId,
-        navigationProperty: "Photo"
+        navigationProperty: relationalFieldName
       });
       const relationLink = this.settingsService.url + endpoint + 'images(' + itemId + ')';
 
       transaction.createRelated({
         entitySet: entitySet,
         key: relationId,
-        navigationProperty: "Photo",
+        navigationProperty: relationalFieldName,
         link: relationLink
     });
   }
