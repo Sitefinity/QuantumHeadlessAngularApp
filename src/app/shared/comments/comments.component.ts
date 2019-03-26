@@ -11,7 +11,6 @@ import {Router} from '@angular/router';
 export class CommentsComponent implements OnInit {
   @Input() commentableItemId: string;
   comments: Comment[] = [];
-  isCommentCreated: boolean;
   showCommentsForm: boolean;
   commentsCount: number = 0;
   creatingComment: boolean;
@@ -37,9 +36,10 @@ export class CommentsComponent implements OnInit {
   submitComment(form: any) {
     if(form.valid) {
       this.creatingComment = true;
-      this.commentsService.createComment(newsItemsDataOptions, this.model, this.commentableItemId).subscribe(isCommentCreated => {
-        this.isCommentCreated = isCommentCreated;
-        this.getComments();
+      this.commentsService.createComment(newsItemsDataOptions, this.model, this.commentableItemId).subscribe((isCommentCreated) => {
+        if (isCommentCreated) {
+          this.getComments();
+        }
       });
     }
   }

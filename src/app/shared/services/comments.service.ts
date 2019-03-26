@@ -33,7 +33,10 @@ export class CommentsService {
       action: 'postcomment',
       data: {'name': comment.Name, 'message': comment.Message },
       successCb: () => isCommentCreated.next(true),
-      failureCb: () => isCommentCreated.next(false)
+      failureCb: (error) => {
+        console.log(error);
+        isCommentCreated.next(false)
+      }
     });
 
     return isCommentCreated.asObservable();

@@ -45,7 +45,7 @@ export class AuthService {
     return ready.asObservable();
   }
 
-  initProvider(ready: Subject<AuthProvider>, provider: AuthProvider) {
+  private initProvider(ready: Subject<AuthProvider>, provider: AuthProvider) {
     this.provider = provider;
     this.provider.getToken().pipe(filter(x => !!x)).subscribe((token) => {
       this.currentToken = token;
