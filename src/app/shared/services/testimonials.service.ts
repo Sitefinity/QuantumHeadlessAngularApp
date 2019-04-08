@@ -6,8 +6,8 @@ import {ImagesService} from './images.service';
 
 export const testimonialDataOptions = {
   urlName: 'testimonials',
-  providerName: "dynamicProvider5",
-  cultureName: "en"
+  providerName: 'dynamicProvider5',
+  cultureName: 'en'
 };
 
 @Injectable({
@@ -33,18 +33,18 @@ export class TestimonialsService {
     return testimonialReplaySubject.asObservable();
   }
 
-  createTestimonial(testimonial: Testimonial):Observable<boolean> {
+  createTestimonial(testimonial: Testimonial): Observable<boolean> {
     const isTestimonialCreated = new ReplaySubject<boolean>(1);
     const sortedFields = this.imageService.sortFieldValues(testimonial);
     const primitiveFields = sortedFields.primitives;
     const relationalFields = sortedFields.relational;
 
     this.imageService.getLibraryByTitle('Default library').subscribe((library: any) => {
-      let parentId = library.RootId ? library.RootId : library.Id;
+      const parentId = library.RootId ? library.RootId : library.Id;
       this.imageService.uploadImage(parentId, relationalFields['Photo']).subscribe((upload => {
         if (upload.success) {
           const success = (result) => {
-            if(result.isSuccessful) {
+            if (result.isSuccessful) {
               isTestimonialCreated.next(true);
             } else {
               isTestimonialCreated.next(false);

@@ -4,8 +4,8 @@ import {Component, Output, EventEmitter, Input} from '@angular/core';
   selector: 'app-taxa',
   templateUrl: './taxa.component.html'
 })
-export class TaxaComponent{
-  @Input() taxas:Taxa[];
+export class TaxaComponent {
+  @Input() taxas: Taxa[];
   @Input() classes: string;
   @Output() taxaClicked: EventEmitter<any> = new EventEmitter();
 
@@ -23,5 +23,5 @@ export class TaxaComponent{
    taxonomyId: string;
    taxonomyOptions: {
      urlName: string;
-   }
+   };
  }

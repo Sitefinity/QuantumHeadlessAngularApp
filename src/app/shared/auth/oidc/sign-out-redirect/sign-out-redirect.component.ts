@@ -1,4 +1,4 @@
-import { from as observableFrom } from "rxjs";
+import { from as observableFrom } from 'rxjs';
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 import { UserManager} from 'oidc-client';

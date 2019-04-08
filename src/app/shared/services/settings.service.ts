@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {LOCAL_STORAGE, StorageService} from './storage.service';
 
-export const SANDBOX_URL = "sandbox_url";
+export const SANDBOX_URL = 'sandbox_url';
 
 @Injectable({
   providedIn: 'root'

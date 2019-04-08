@@ -12,7 +12,7 @@ export class CommentsComponent implements OnInit {
   @Input() commentableItemId: string;
   comments: Comment[] = [];
   showCommentsForm: boolean;
-  commentsCount: number = 0;
+  commentsCount = 0;
   creatingComment: boolean;
   model: Comment = new Comment();
 
@@ -21,7 +21,7 @@ export class CommentsComponent implements OnInit {
   ngOnInit() {
     this.authService.init().subscribe(() => {
       this.authService.isLoggedIn().subscribe((isLoggedIn) => {
-        if(isLoggedIn) {
+        if (isLoggedIn) {
           this.showCommentsForm = true;
           this.authService.getUser().subscribe((user) => {
             this.model.Name = user.Username;
@@ -34,7 +34,7 @@ export class CommentsComponent implements OnInit {
   }
 
   submitComment(form: any) {
-    if(form.valid) {
+    if (form.valid) {
       this.creatingComment = true;
       this.commentsService.createComment(newsItemsDataOptions, this.model, this.commentableItemId).subscribe((isCommentCreated) => {
         if (isCommentCreated) {
@@ -46,8 +46,8 @@ export class CommentsComponent implements OnInit {
 
   getComments() {
     this.commentsService.getComments(newsItemsDataOptions, this.commentableItemId).subscribe((data: Comment[]) => {
-      if(data) {
-        if(this.comments.length === 0) {
+      if (data) {
+        if (this.comments.length === 0) {
           this.comments = data.reverse();
         }
 

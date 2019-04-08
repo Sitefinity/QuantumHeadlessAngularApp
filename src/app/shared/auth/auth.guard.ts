@@ -14,13 +14,13 @@ export class AuthGuard implements CanActivate {
     const isLoggedInSubject = new ReplaySubject<boolean>(1);
     this.authService.init().subscribe(() => {
       this.authService.isLoggedIn().subscribe((isLoggedIn) => {
-        if(!isLoggedIn) {
+        if (!isLoggedIn) {
           this.authService.signIn(state.url).subscribe();
         }
 
         isLoggedInSubject.next(isLoggedIn);
         isLoggedInSubject.complete();
-      })
+      });
     });
 
     return isLoggedInSubject.asObservable();

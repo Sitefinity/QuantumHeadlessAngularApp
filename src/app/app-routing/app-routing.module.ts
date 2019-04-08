@@ -33,9 +33,9 @@ const routes: Routes = [
       { path: ROUTE_PATHS.SUBMIT_TESTIMONIAL, component: TestimonialFormComponent, canActivate: [AuthGuard]}
     ]
   },
-  { path: "auth", children: [
+  { path: 'auth', children: [
       {
-        path: "oidc", children: [
+        path: 'oidc', children: [
           {
             path: AUTH_ROUTE_PATHS.SIGN_IN_REDIRECT, component: SignInRedirectComponent
           },
@@ -46,8 +46,7 @@ const routes: Routes = [
       }
     ]},
   { path: ROUTE_PATHS.CONFIG,  component: ConfigComponent},
-  { path: ROUTE_PATHS.NOT_FOUND, component: NotFoundComponent },
-  { path: ROUTE_PATHS.NOT_FOUND_ANY, redirectTo: 'not-found', pathMatch: 'full' }
+  { path: ROUTE_PATHS.NOT_FOUND, component: NotFoundComponent }
 ];
 
 @NgModule({

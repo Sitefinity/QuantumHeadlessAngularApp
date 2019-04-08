@@ -10,7 +10,7 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './search-result.component.html'
 })
 export class SearchResultComponent extends RxBaseComponent implements OnInit  {
-  searchResults:Observable<any>;
+  searchResults: Observable<any>;
   searchTerm: string;
 
   constructor(private searchService: SearchService, public settings: SettingsService, private route: ActivatedRoute) {
@@ -20,10 +20,10 @@ export class SearchResultComponent extends RxBaseComponent implements OnInit  {
   ngOnInit() {
     this.searchResults = this.searchService.searchResults;
     this.route.params.subscribe(data => {
-      if(data['searchTerm']) {
+      if (data['searchTerm']) {
         this.searchTerm = data['searchTerm'];
         this.searchService.getItemsBySearchWord(this.searchTerm);
       }
-    })
+    });
   }
 }

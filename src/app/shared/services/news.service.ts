@@ -28,7 +28,7 @@ export class NewsService {
     } else {
       query = this.sitefinity
         .query
-        .select('Title', 'Id', 'Content', 'DateCreated', 'PublicationDate', 'Summary', 'UrlName', 'Author','Tags', 'Category', 'Featured')
+        .select('Title', 'Id', 'Content', 'DateCreated', 'PublicationDate', 'Summary', 'UrlName', 'Author', 'Tags', 'Category', 'Featured')
         .expand('Thumbnail')
         .order('PublicationDate desc');
     }
@@ -67,7 +67,7 @@ export class NewsService {
             .select('Title', 'Id', 'Content', 'DateCreated', 'Summary', 'UrlName', 'Author', 'Tags')
             .expand('Thumbnail')
             .order('Title desc'),
-          successCb: (data: NewsItem) => {newsReplaySubject.next(data)},
+          successCb: (data: NewsItem) => {newsReplaySubject.next(data); },
           failureCb: data => console.log(data)
         });
     return newsReplaySubject.asObservable();

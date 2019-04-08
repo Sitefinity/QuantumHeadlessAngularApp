@@ -1,6 +1,6 @@
 import {Inject, Injectable} from '@angular/core';
 import {of as observableOf, Observable, ReplaySubject, Subject} from 'rxjs';
-import { filter } from "rxjs/operators";
+import { filter } from 'rxjs/operators';
 import {OidcProvider} from './oidc/oidc.provider';
 import {AUTH_PROVIDER_TOKEN, AuthProvider, Token} from './auth.provider';
 import {SitefinityService} from '../services/sitefinity.service';
@@ -15,7 +15,7 @@ export class AuthService {
   constructor(@Inject(AUTH_PROVIDER_TOKEN) private oidcProvider: OidcProvider, private sitefinity: SitefinityService) { }
 
   init(): Observable<any> {
-    if(this.provider) {
+    if (this.provider) {
       return observableOf(this.provider);
     }
 

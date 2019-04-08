@@ -23,7 +23,9 @@ export class LayoutComponent implements OnInit {
       filter(event => event instanceof NavigationEnd),
       map(() => this.route),
       map((route) => {
-        while (route.firstChild) route = route.firstChild;
+        while (route.firstChild) {
+          route = route.firstChild;
+        }
         return route;
       }),
       filter((route) => route.outlet === 'primary'),

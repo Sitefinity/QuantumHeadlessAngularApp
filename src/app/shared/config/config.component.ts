@@ -47,7 +47,7 @@ export class ConfigComponent implements OnInit {
 
     // add protocol scheme (https://) if missing
     if (!str.match(/^\w+:\/\//)) {
-      str = "http" + str;
+      str = 'http' + str;
     }
 
     return str;

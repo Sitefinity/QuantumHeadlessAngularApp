@@ -9,7 +9,7 @@ import {SearchResultItem} from '../search/search.component';
 })
 export class SearchService {
   @Output() searchTriggered = new EventEmitter<any>();
-  private _searchResults:ReplaySubject<SearchResultItem[]> = new ReplaySubject<SearchResultItem[]>(1);
+  private _searchResults: ReplaySubject<SearchResultItem[]> = new ReplaySubject<SearchResultItem[]>(1);
   get searchResults(): Observable<SearchResultItem[]> {
       return this._searchResults.asObservable();
   }

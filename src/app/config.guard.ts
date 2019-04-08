@@ -15,7 +15,7 @@ export class ConfigGuard implements CanActivate {
     if (this.settings.url && !sandboxUrl) {
       return true;
     } else {
-      this.router.navigate(["/config"], {queryParams: {'url': sandboxUrl}});
+      this.router.navigate(['/config'], {queryParams: {'url': sandboxUrl}});
       return false;
     }
   }

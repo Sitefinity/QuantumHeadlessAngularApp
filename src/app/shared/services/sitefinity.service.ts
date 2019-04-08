@@ -1,7 +1,7 @@
 import {Inject, Injectable} from '@angular/core';
 import {SettingsService} from './settings.service';
 
-//export const endpoint = '/sf/system/';
+// export const endpoint = '/sf/system/';
 export const endpoint = '/api/default/';
 
 @Injectable({
@@ -12,7 +12,7 @@ export class SitefinityService {
   private queryInstance: any;
 
   get instance(): any {
-    if(!this.sitefinity) {
+    if (!this.sitefinity) {
       this.initializeInstance();
     }
     return this.sitefinity;
@@ -32,9 +32,9 @@ export class SitefinityService {
 
   constructor(@Inject('Sitefinity') private sf, private settings: SettingsService) {}
 
-  private initializeInstance(){
+  private initializeInstance() {
     const serviceUrl = `${this.settings.url}${endpoint}`;
-    if(serviceUrl) {
+    if (serviceUrl) {
       this.sitefinity = new this.sf({serviceUrl});
       this.queryInstance = new this.sf.Query();
     }

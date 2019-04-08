@@ -1,18 +1,18 @@
-import {Inject, Injectable, InjectionToken} from '@angular/core';
-import {AuthProvider, QuantumUser, Token} from '../auth.provider';
-import {UserManager, User} from 'oidc-client';
-import {SettingsService} from '../../services/settings.service';
-import {of as observableOf, from as observableFrom, combineLatest as observableCombineLatest, Observable, ReplaySubject} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
-import { catchError, map } from "rxjs/operators";
+import { Inject, Injectable, InjectionToken } from '@angular/core';
+import { AuthProvider, QuantumUser, Token } from '../auth.provider';
+import { UserManager, User } from 'oidc-client';
+import { SettingsService } from '../../services/settings.service';
+import { of as observableOf, from as observableFrom, combineLatest as observableCombineLatest, Observable, ReplaySubject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
+import { catchError, map } from 'rxjs/operators';
 import { switchMap } from 'rxjs/operators';
-import {Router} from '@angular/router';
-import {AUTH_ROUTE_PATHS} from '../../../app-routing/route-paths';
-import {PathLocationStrategy} from '@angular/common';
+import { Router } from '@angular/router';
+import { AUTH_ROUTE_PATHS } from '../../../app-routing/route-paths';
+import { PathLocationStrategy } from '@angular/common';
 
 const OPEN_ID_PATH = 'Sitefinity/Authenticate/OpenID';
 const FORWARD_SLASH = '/';
-export const WINDOW_TOKEN = new InjectionToken("Window");
+export const WINDOW_TOKEN = new InjectionToken('Window');
 
 @Injectable()
 export class OidcProvider implements AuthProvider {
@@ -27,11 +27,25 @@ export class OidcProvider implements AuthProvider {
     filterProtocolClaims: true,
     loadUserInfo: true
   };
+  private static trimForwardSlash(path: string): string {
+    let result = path;
+
+    while (result.startsWith(FORWARD_SLASH)) {
+      result = result.substring(FORWARD_SLASH.length);
+    }
+
+    while (result.endsWith(FORWARD_SLASH)) {
+      result = result.substring(0, result.length - FORWARD_SLASH.length);
+    }
+
+    return result;
+  }
+
   constructor(settings: SettingsService,
               private http: HttpClient,
               private router: Router,
               private locationStrategy: PathLocationStrategy,
-              @Inject(WINDOW_TOKEN) private window: Window,) {
+              @Inject(WINDOW_TOKEN) private window: Window) {
     this.settings.authority = `${settings.url}/${OPEN_ID_PATH}`;
     this.settings.post_logout_redirect_uri = this.getAbsoluteUrl(`/auth/oidc/${AUTH_ROUTE_PATHS.SIGN_OUT_REDIRECT}`);
     this.settings.redirect_uri = this.getAbsoluteUrl(`/auth/oidc/${AUTH_ROUTE_PATHS.SIGN_IN_REDIRECT}`);
@@ -91,7 +105,7 @@ export class OidcProvider implements AuthProvider {
   }
 
   getUser(): Observable<QuantumUser> {
-    return observableFrom(this.manager.getUser()).pipe(map( user => {return { Username: user.profile.preferred_username, Picture: user.profile.picture}} ));
+    return observableFrom(this.manager.getUser()).pipe(map( user => { return { Username: user.profile.preferred_username, Picture: user.profile.picture}; } ));
   }
 
   getToken(): Observable<Token> {
@@ -134,19 +148,4 @@ export class OidcProvider implements AuthProvider {
 
     return result;
   }
-
-  private static trimForwardSlash(path: string): string {
-    let result = path;
-
-    while (result.startsWith(FORWARD_SLASH)) {
-      result = result.substring(FORWARD_SLASH.length);
-    }
-
-    while (result.endsWith(FORWARD_SLASH)) {
-      result = result.substring(0, result.length - FORWARD_SLASH.length);
-    }
-
-    return result;
-  }
-
 }

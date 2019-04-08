@@ -1,6 +1,6 @@
 import {Injectable, InjectionToken} from '@angular/core';
 
-export const LOCAL_STORAGE = new InjectionToken("LocalStorage");
+export const LOCAL_STORAGE = new InjectionToken('LocalStorage');
 
 @Injectable({
   providedIn: 'root'

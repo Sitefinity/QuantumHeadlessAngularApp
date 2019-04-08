@@ -20,7 +20,7 @@ export class ImagesService {
 
   constructor(private sitefinity: SitefinityService,  private settingsService: SettingsService, private sanitizer: DomSanitizer) { }
 
-  getImageByTitle(title: string): Observable<Image>{
+  getImageByTitle(title: string): Observable<Image> {
     const replaySubjectImage = new ReplaySubject<Image>(1);
     this.sitefinity.instance.data(imageDataOptions).get({
       query: this.sitefinity
@@ -51,7 +51,7 @@ export class ImagesService {
   }
 
   public uploadImage(libraryId: string, imageProperties: any ): Observable<any> {
-    let upload = {success: false, failure: false, result: null, errorMessage: null };
+    const upload = { success: false, failure: false, result: null, errorMessage: null };
     const resultSubject = new ReplaySubject<any>(1);
 
     const success = (result) => {
@@ -76,8 +76,8 @@ export class ImagesService {
     const progress = () => {};
 
     const batch = this.sitefinity.instance.batch(success, reject, progress, {
-      providerName: "OpenAccessDataProvider",
-      cultureName: "en"
+      providerName: 'OpenAccessDataProvider',
+      cultureName: 'en'
     });
 
     const transaction = batch.beginTransaction();
@@ -93,7 +93,7 @@ export class ImagesService {
     };
 
     const uploadedFile = transaction.upload({
-      entitySet: "images",
+      entitySet: 'images',
       data: file,
       dataUrl: safeUrl,
       contentType: file.type,
@@ -102,10 +102,10 @@ export class ImagesService {
     });
 
     transaction.operation({
-      entitySet: "images",
+      entitySet: 'images',
       key: uploadedFile,
       data: {
-        action: "Publish"
+        action: 'Publish'
       }
     });
     batch.endTransaction(transaction);
@@ -131,9 +131,9 @@ export class ImagesService {
   }
 
   public sortFieldValues(obj: any): SortedProperties {
-    const sortedFieldValues:SortedProperties = { primitives: {}, relational: {} };
-    for(let key in obj){
-      if(this.isPrimitiveProperty(obj[key])) {
+    const sortedFieldValues: SortedProperties = { primitives: {}, relational: {} };
+    for (const key in obj) {
+      if (this.isPrimitiveProperty(obj[key])) {
         sortedFieldValues.primitives[key] = obj[key];
       } else {
         sortedFieldValues.relational[key] = obj[key];
@@ -147,12 +147,12 @@ export class ImagesService {
   }
 
   private isObject(val) {
-    if (val === null) { return false;}
+    if (val === null) { return false; }
     return ( (typeof val === 'function') || (typeof val === 'object') );
   }
 }
 
-class ImagePrimitives{
+class ImagePrimitives {
   DirectUpload: boolean;
   Height: number;
   Width: number;

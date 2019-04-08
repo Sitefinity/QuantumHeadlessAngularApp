@@ -1,6 +1,6 @@
-import { Observable } from "rxjs";
-import { InjectionToken } from "@angular/core";
-export const AUTH_PROVIDER_TOKEN = new InjectionToken("auth_provider");
+import { Observable } from 'rxjs';
+import { InjectionToken } from '@angular/core';
+export const AUTH_PROVIDER_TOKEN = new InjectionToken('auth_provider');
 
 export interface AuthProvider {
   signIn(returnUrl: string): Observable<void>;
@@ -11,8 +11,8 @@ export interface AuthProvider {
 }
 
 export interface Token {
-  type: string,
-  value: string
+  type: string;
+  value: string;
 }
 
 export class QuantumUser {

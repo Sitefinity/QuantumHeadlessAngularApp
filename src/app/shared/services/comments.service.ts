@@ -15,7 +15,7 @@ export class CommentsService {
     this.sitefinity.instance.data(contentItemsDataOptions).getSingle({
       key: contentItemId,
       action: 'Comments',
-      successCb: data => { return commentSubject.next(data.value as Comment[])},
+      successCb: data => { return commentSubject.next(data.value as Comment[]); },
       failureCb: data => console.log(data)
     });
     return commentSubject.asObservable();
@@ -35,7 +35,7 @@ export class CommentsService {
       successCb: () => isCommentCreated.next(true),
       failureCb: (error) => {
         console.log(error);
-        isCommentCreated.next(false)
+        isCommentCreated.next(false);
       }
     });
 

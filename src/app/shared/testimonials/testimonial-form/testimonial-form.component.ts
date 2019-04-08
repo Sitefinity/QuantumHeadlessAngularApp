@@ -7,7 +7,7 @@ import {Router} from '@angular/router';
   selector: 'app-testimonial-form',
   templateUrl: './testimonial-form.component.html'
 })
-export class TestimonialFormComponent{
+export class TestimonialFormComponent {
   model: Testimonial = new Testimonial();
   createdTestimonialMessage: string = null;
   creatingTestimonial: boolean;
@@ -19,11 +19,11 @@ export class TestimonialFormComponent{
       this.creatingTestimonial = true;
       this.testimonialsService.createTestimonial(this.model).subscribe(isCreated => {
         this.creatingTestimonial = false;
-        if(isCreated) {
-          this.createdTestimonialMessage = "Thank you for your testimonial!";
+        if (isCreated) {
+          this.createdTestimonialMessage = 'Thank you for your testimonial!';
           this.model = new Testimonial();
         } else {
-          this.createdTestimonialMessage = "Whoops! Something went wrong";
+          this.createdTestimonialMessage = 'Whoops! Something went wrong';
         }
       });
     }
@@ -31,11 +31,11 @@ export class TestimonialFormComponent{
 
   onImageChange(event) {
     const image = event.target.files[0];
-    let fr = new FileReader();
+    const fr = new FileReader();
     fr.onload = () => {
       const img = new Image();
       img.onload = () => {
-        this.model.Photo = {file: image, width: img.width, height: img.height  }
+        this.model.Photo = {file: image, width: img.width, height: img.height};
       };
 
       img.src = fr.result;

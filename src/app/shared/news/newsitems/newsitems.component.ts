@@ -16,7 +16,7 @@ export class NewsItemsComponent extends RxBaseComponent implements OnInit {
   tagsName: string = tagsProperty;
   categoryName: string = categoryProperty;
   private allItemsCount: number;
-  private showMoreItemsLink: boolean = true;
+  private showMoreItemsLink = true;
   private subscription: Subscription;
   private newsItemsCountSubscription: Subscription;
   private newsItemsForTagSubscription: Subscription;
@@ -53,16 +53,16 @@ export class NewsItemsComponent extends RxBaseComponent implements OnInit {
   }
 
   getTaxa(taxaOptions: TaxaOptions, propertyName: string): Observable<Taxa[]> {
-    let taxaReplaySubject = new ReplaySubject<Taxa[]>(1);
+    const taxaReplaySubject = new ReplaySubject<Taxa[]>(1);
     this.allNewsItemsSubscription = this.newsService.getNewsItems().subscribe((data: NewsItem[]) => {
-      let newsItemsTaxas: Array<string> = [];
+      const newsItemsTaxas: Array<string> = [];
       if (data) {
         data.forEach((newsItem) => {
-          if(newsItem[propertyName]) {
+          if (newsItem[propertyName]) {
             newsItemsTaxas.push(...newsItem[propertyName]);
           }
         });
-        this.taxaServiceSubscription = this.taxaService.getTaxaForIds(taxaOptions, newsItemsTaxas).subscribe(data =>taxaReplaySubject.next(data));
+        this.taxaServiceSubscription = this.taxaService.getTaxaForIds(taxaOptions, newsItemsTaxas).subscribe(data => taxaReplaySubject.next(data));
       }
     });
     return taxaReplaySubject.asObservable();

@@ -17,8 +17,8 @@ export const categoriesOptions: TaxaOptions = {
   }
 };
 
-export const tagsProperty: string = 'Tags';
-export const categoryProperty: string = 'Category';
+export const tagsProperty = 'Tags';
+export const categoryProperty = 'Category';
 
 @Injectable({
   providedIn: 'root'
@@ -27,7 +27,7 @@ export class TaxaService {
 
   constructor(private sitefinity: SitefinityService) { }
 
-  getAllTaxa(taxonomyOptions: TaxaOptions ): Observable<Taxa[]>{
+  getAllTaxa(taxonomyOptions: TaxaOptions): Observable<Taxa[]> {
     const tagsReplaySubject = new ReplaySubject<Taxa[]>(1);
     this.sitefinity.instance.data(taxonomyOptions.taxonomyOptions).get({
       query: this.sitefinity
@@ -46,7 +46,7 @@ export class TaxaService {
   getTaxaForIds(taxonomyOptions: TaxaOptions, ids: string[]): Observable<Taxa[]> {
     const tagsByIdReplaySubject = new ReplaySubject<Taxa[]>(1);
     this.getAllTaxa(taxonomyOptions).subscribe((data) => {
-      let taxas: Taxa[] = [];
+      const taxas: Taxa[] = [];
       if (data) {
         data.forEach((taxa) => {
           const occurencesInArray = this.getCountInArray(ids, taxa.Id);
