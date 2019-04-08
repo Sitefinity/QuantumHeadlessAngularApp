@@ -1,11 +1,11 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
-import {SitefinityService} from './sitefinity.service';
-import {Observable, ReplaySubject} from 'rxjs';
-import {Router} from '@angular/router';
-import {SearchResultItem} from '../search/search.component';
+import { EventEmitter, Injectable, Output } from "@angular/core";
+import { SitefinityService } from "./sitefinity.service";
+import { Observable, ReplaySubject } from "rxjs";
+import { Router } from "@angular/router";
+import { SearchResultItem} from "../search/search.component";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class SearchService {
   @Output() searchTriggered = new EventEmitter<any>();
@@ -17,43 +17,43 @@ export class SearchService {
   constructor(private router: Router, private sitefinity: SitefinityService) { }
 
   search(searchWord: string) {
-    this.router.navigate(['/search-results', searchWord]);
+    this.router.navigate(["/search-results", searchWord]);
   }
 
    getItemsBySearchWord(searchWord: string): void {
     const batch = this.sitefinity.instance.batch(data => this._searchResults.next(this.mapSearchResults(data)));
-    batch.get({ entitySet: 'showcases', query: this.sitefinity
+    batch.get({ entitySet: "showcases", query: this.sitefinity
         .query
-        .select('Title', 'Client', 'Challenge', 'Solution', 'Results', 'Id')
-        .order('Title asc')
+        .select("Title", "Client", "Challenge", "Solution", "Results", "Id")
+        .order("Title asc")
         .where()
         .or()
-        .contains('Title', searchWord)
+        .contains("Title", searchWord)
         .or()
-        .contains('Client', searchWord)
+        .contains("Client", searchWord)
         .or()
-        .contains('Challenge', searchWord)
+        .contains("Challenge", searchWord)
         .or()
-        .contains('Solution', searchWord)
+        .contains("Solution", searchWord)
         .or()
-        .contains('Results', searchWord)
+        .contains("Results", searchWord)
         .done().done().done().done().done().done()});
-    batch.get({ entitySet: 'images', query: this.sitefinity
+    batch.get({ entitySet: "images", query: this.sitefinity
         .query
         .where()
-        .contains('Title', searchWord)
+        .contains("Title", searchWord)
         .done()});
-    batch.get({ entitySet: 'newsitems', query: this.sitefinity
+    batch.get({ entitySet: "newsitems", query: this.sitefinity
         .query
-        .select('Title', 'Content', 'Summary', 'Id')
-        .order('Title asc')
+        .select("Title", "Content", "Summary", "Id")
+        .order("Title asc")
         .where()
         .or()
-        .contains('Title', searchWord)
+        .contains("Title", searchWord)
         .or()
-        .contains('Content', searchWord)
+        .contains("Content", searchWord)
         .or()
-        .contains('Summary', searchWord)
+        .contains("Summary", searchWord)
         .done().done().done().done()});
     batch.execute();
   }
@@ -63,26 +63,26 @@ export class SearchService {
     const data = result.data;
     if (data.length > 0) {
       data.forEach((item) => {
-        const context = item.response.data['@odata.context'];
+        const context = item.response.data["@odata.context"];
         let contentType;
         const valuesArray = item.response.data.value;
         if (context) {
-          contentType = context.substring(context.indexOf('#') + 1, context.indexOf('('));
+          contentType = context.substring(context.indexOf("#") + 1, context.indexOf("("));
         }
 
         if (valuesArray && valuesArray.length > 0) {
           switch (contentType) {
-            case 'newsitems':
+            case "newsitems":
               valuesArray.forEach(contentItm => {
-                searchResults.push({ Title: contentItm.Title, DetailLink: '/news/' + contentItm.Id, Content: contentItm.Summary });
+                searchResults.push({ Title: contentItm.Title, DetailLink: "/news/" + contentItm.Id, Content: contentItm.Summary });
               });
               break;
-            case 'showcases':
+            case "showcases":
               valuesArray.forEach(contentItm => {
-                searchResults.push({ Title: contentItm.Title, DetailLink: '/showcases/' + contentItm.Id, Content: contentItm.Challenge });
+                searchResults.push({ Title: contentItm.Title, DetailLink: "/showcases/" + contentItm.Id, Content: contentItm.Challenge });
               });
               break;
-            case 'images':
+            case "images":
               valuesArray.forEach(contentItm => {
                 searchResults.push({ Title: contentItm.Title, ImageUrl: contentItm.Url });
               });

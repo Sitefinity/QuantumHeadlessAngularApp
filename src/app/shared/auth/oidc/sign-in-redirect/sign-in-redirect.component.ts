@@ -1,11 +1,11 @@
-import { from as observableFrom } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import {UserManager} from 'oidc-client';
+import { from as observableFrom } from "rxjs";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { UserManager } from "oidc-client";
 
 @Component({
-  selector: 'app-sign-in-redirect',
-  template: ''
+  selector: "app-sign-in-redirect",
+  template: ""
 })
 export class SignInRedirectComponent implements OnInit {
 

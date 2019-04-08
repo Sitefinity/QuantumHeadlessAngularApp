@@ -1,11 +1,11 @@
-import {Inject, Injectable} from '@angular/core';
-import {SettingsService} from './settings.service';
+import { Inject, Injectable } from "@angular/core";
+import { SettingsService } from "./settings.service";
 
-// export const endpoint = '/sf/system/';
-export const endpoint = '/api/default/';
+// export const endpoint = "/sf/system/";
+export const endpoint = "/api/default/";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class SitefinityService {
   private sitefinity: any;
@@ -30,7 +30,7 @@ export class SitefinityService {
     return this.instance.authentication.getToken();
   }
 
-  constructor(@Inject('Sitefinity') private sf, private settings: SettingsService) {}
+  constructor(@Inject("Sitefinity") private sf, private settings: SettingsService) {}
 
   private initializeInstance() {
     const serviceUrl = `${this.settings.url}${endpoint}`;

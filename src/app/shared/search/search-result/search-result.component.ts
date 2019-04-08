@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import {SearchService} from '../../services/search.service';
-import {RxBaseComponent} from '../../common/rx-base/rx-base.component';
-import {Observable} from 'rxjs';
-import {SettingsService} from '../../services/settings.service';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from "@angular/core";
+import { SearchService } from "../../services/search.service";
+import { RxBaseComponent } from "../../common/rx-base/rx-base.component";
+import { Observable } from "rxjs";
+import { SettingsService } from "../../services/settings.service";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
-  selector: 'app-search-result',
-  templateUrl: './search-result.component.html'
+  selector: "app-search-result",
+  templateUrl: "./search-result.component.html"
 })
 export class SearchResultComponent extends RxBaseComponent implements OnInit  {
   searchResults: Observable<any>;
@@ -20,8 +20,8 @@ export class SearchResultComponent extends RxBaseComponent implements OnInit  {
   ngOnInit() {
     this.searchResults = this.searchService.searchResults;
     this.route.params.subscribe(data => {
-      if (data['searchTerm']) {
-        this.searchTerm = data['searchTerm'];
+      if (data["searchTerm"]) {
+        this.searchTerm = data["searchTerm"];
         this.searchService.getItemsBySearchWord(this.searchTerm);
       }
     });

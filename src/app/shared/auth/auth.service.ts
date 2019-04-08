@@ -1,12 +1,12 @@
-import {Inject, Injectable} from '@angular/core';
-import {of as observableOf, Observable, ReplaySubject, Subject} from 'rxjs';
-import { filter } from 'rxjs/operators';
-import {OidcProvider} from './oidc/oidc.provider';
-import {AUTH_PROVIDER_TOKEN, AuthProvider, Token} from './auth.provider';
-import {SitefinityService} from '../services/sitefinity.service';
+import { Inject, Injectable } from "@angular/core";
+import { of as observableOf, Observable, ReplaySubject, Subject } from "rxjs";
+import { filter } from "rxjs/operators";
+import { OidcProvider } from "./oidc/oidc.provider";
+import { AUTH_PROVIDER_TOKEN, AuthProvider, Token } from "./auth.provider";
+import { SitefinityService } from "../services/sitefinity.service";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class AuthService {
   private provider: AuthProvider = null;

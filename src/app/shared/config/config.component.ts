@@ -1,18 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import {SettingsService} from '../services/settings.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {ROUTE_PATHS} from '../../app-routing/route-paths';
+import { Component, OnInit } from "@angular/core";
+import { SettingsService } from "../services/settings.service";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ROUTE_PATHS } from "../../app-routing/route-paths";
 
 @Component({
-  selector: 'app-config',
-  templateUrl: './config.component.html'
+  selector: "app-config",
+  templateUrl: "./config.component.html"
 })
 export class ConfigComponent implements OnInit {
 
   constructor(private settings: SettingsService, private router: Router, private route: ActivatedRoute) { }
 
   ngOnInit() {
-    const sandboxUrl = this.route.snapshot.queryParams['url'];
+    const sandboxUrl = this.route.snapshot.queryParams["url"];
     if (sandboxUrl) {
       this.currentUrl = sandboxUrl;
       this.onSave();
@@ -41,13 +41,13 @@ export class ConfigComponent implements OnInit {
     str = str.trim();
 
     // strip end slashes
-    while (str.endsWith('/')) {
+    while (str.endsWith("/")) {
       str = str.substring(0, str.length - 1);
     }
 
     // add protocol scheme (https://) if missing
     if (!str.match(/^\w+:\/\//)) {
-      str = 'http' + str;
+      str = "http" + str;
     }
 
     return str;

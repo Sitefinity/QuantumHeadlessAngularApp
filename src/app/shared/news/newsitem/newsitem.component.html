@@ -2,7 +2,7 @@
   <div class="container">
     <ng-container>
       <h2>{{newsItem.Title}}</h2>
-      <div class="text-muted">{{newsItem.DateCreated | date:'medium'}} by {{newsItem.Author}}</div>
+      <div class="text-muted">{{newsItem.DateCreated | date:"medium"}} by {{newsItem.Author}}</div>
       <div class="news_image news_image_detail">
         <img style="display: block; min-height: 230px;" *ngIf="newsItem.Thumbnail" [src]="newsItem.Thumbnail.Url" [alt]="newsItem.Thumbnail.AlternativeText"/>
       </div>

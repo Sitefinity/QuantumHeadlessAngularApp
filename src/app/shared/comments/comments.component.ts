@@ -1,12 +1,12 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {AuthService} from '../auth/auth.service';
-import {CommentsService} from '../services/comments.service';
-import {newsItemsDataOptions} from '../services/news.service';
-import {Router} from '@angular/router';
+import { Component, Input, OnInit } from "@angular/core";
+import { AuthService } from "../auth/auth.service";
+import { CommentsService } from "../services/comments.service";
+import { newsItemsDataOptions } from "../services/news.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-comments',
-  templateUrl: './comments.component.html'
+  selector: "app-comments",
+  templateUrl: "./comments.component.html"
 })
 export class CommentsComponent implements OnInit {
   @Input() commentableItemId: string;

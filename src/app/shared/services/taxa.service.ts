@@ -1,27 +1,27 @@
-import { Injectable } from '@angular/core';
-import { SitefinityService } from './sitefinity.service';
-import { Observable, ReplaySubject } from 'rxjs';
-import { Taxa, TaxaOptions } from '../taxa/taxa.component';
+import { Injectable } from "@angular/core";
+import { SitefinityService } from "./sitefinity.service";
+import { Observable, ReplaySubject } from "rxjs";
+import { Taxa, TaxaOptions } from "../taxa/taxa.component";
 
 export const tagsOptions: TaxaOptions = {
-  taxonomyId: 'cb0f3a19-a211-48a7-88ec-77495c0f5374',
+  taxonomyId: "cb0f3a19-a211-48a7-88ec-77495c0f5374",
   taxonomyOptions: {
-    urlName: 'flat-taxa'
+    urlName: "flat-taxa"
   }
 };
 
 export const categoriesOptions: TaxaOptions = {
-  taxonomyId: 'e5cd6d69-1543-427b-ad62-688a99f5e7d4',
+  taxonomyId: "e5cd6d69-1543-427b-ad62-688a99f5e7d4",
   taxonomyOptions: {
-    urlName: 'hierarchy-taxa'
+    urlName: "hierarchy-taxa"
   }
 };
 
-export const tagsProperty = 'Tags';
-export const categoryProperty = 'Category';
+export const tagsProperty = "Tags";
+export const categoryProperty = "Category";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class TaxaService {
 
@@ -32,10 +32,10 @@ export class TaxaService {
     this.sitefinity.instance.data(taxonomyOptions.taxonomyOptions).get({
       query: this.sitefinity
         .query
-        .select('Title', 'Id')
-        .order('Title desc')
+        .select("Title", "Id")
+        .order("Title desc")
         .where()
-        .eq('TaxonomyId', taxonomyOptions.taxonomyId)
+        .eq("TaxonomyId", taxonomyOptions.taxonomyId)
         .done(),
       successCb: data => tagsReplaySubject.next(data.value as Taxa[]),
       failureCb: data => console.log(data)

@@ -1,12 +1,12 @@
-import { from as observableFrom } from 'rxjs';
-import { Component, OnInit } from '@angular/core';
-import {Router} from '@angular/router';
-import { UserManager} from 'oidc-client';
-import {ROUTE_PATHS} from '../../../../app-routing/route-paths';
+import { from as observableFrom } from "rxjs";
+import { Component, OnInit } from "@angular/core";
+import { Router } from "@angular/router";
+import { UserManager } from "oidc-client";
+import { ROUTE_PATHS } from "../../../../app-routing/route-paths";
 
 @Component({
-  selector: 'app-sign-out-redirect',
-  template: ''
+  selector: "app-sign-out-redirect",
+  template: ""
 })
 export class SignOutRedirectComponent implements OnInit {
 

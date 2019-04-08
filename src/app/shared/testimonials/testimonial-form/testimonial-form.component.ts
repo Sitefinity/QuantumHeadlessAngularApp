@@ -1,11 +1,11 @@
-import { Component } from '@angular/core';
-import {Testimonial} from '../testimonials.component';
-import {TestimonialsService} from '../../services/testimonials.service';
-import {Router} from '@angular/router';
+import { Component } from "@angular/core";
+import { Testimonial } from "../testimonials.component";
+import { TestimonialsService } from "../../services/testimonials.service";
+import { Router } from "@angular/router";
 
 @Component({
-  selector: 'app-testimonial-form',
-  templateUrl: './testimonial-form.component.html'
+  selector: "app-testimonial-form",
+  templateUrl: "./testimonial-form.component.html"
 })
 export class TestimonialFormComponent {
   model: Testimonial = new Testimonial();
@@ -20,10 +20,10 @@ export class TestimonialFormComponent {
       this.testimonialsService.createTestimonial(this.model).subscribe(isCreated => {
         this.creatingTestimonial = false;
         if (isCreated) {
-          this.createdTestimonialMessage = 'Thank you for your testimonial!';
+          this.createdTestimonialMessage = "Thank you for your testimonial!";
           this.model = new Testimonial();
         } else {
-          this.createdTestimonialMessage = 'Whoops! Something went wrong';
+          this.createdTestimonialMessage = "Whoops! Something went wrong";
         }
       });
     }

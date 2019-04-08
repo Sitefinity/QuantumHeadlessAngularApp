@@ -1,18 +1,18 @@
-import { Inject, Injectable, InjectionToken } from '@angular/core';
-import { AuthProvider, QuantumUser, Token } from '../auth.provider';
-import { UserManager, User } from 'oidc-client';
-import { SettingsService } from '../../services/settings.service';
-import { of as observableOf, from as observableFrom, combineLatest as observableCombineLatest, Observable, ReplaySubject } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
-import { catchError, map } from 'rxjs/operators';
-import { switchMap } from 'rxjs/operators';
-import { Router } from '@angular/router';
-import { AUTH_ROUTE_PATHS } from '../../../app-routing/route-paths';
-import { PathLocationStrategy } from '@angular/common';
+import { Inject, Injectable, InjectionToken } from "@angular/core";
+import { AuthProvider, QuantumUser, Token } from "../auth.provider";
+import { UserManager, User } from "oidc-client";
+import { SettingsService } from "../../services/settings.service";
+import { of as observableOf, from as observableFrom, combineLatest as observableCombineLatest, Observable, ReplaySubject } from "rxjs";
+import { HttpClient } from "@angular/common/http";
+import { catchError, map } from "rxjs/operators";
+import { switchMap } from "rxjs/operators";
+import { Router } from "@angular/router";
+import { AUTH_ROUTE_PATHS } from "../../../app-routing/route-paths";
+import { PathLocationStrategy } from "@angular/common";
 
-const OPEN_ID_PATH = 'Sitefinity/Authenticate/OpenID';
-const FORWARD_SLASH = '/';
-export const WINDOW_TOKEN = new InjectionToken('Window');
+const OPEN_ID_PATH = "Sitefinity/Authenticate/OpenID";
+const FORWARD_SLASH = "/";
+export const WINDOW_TOKEN = new InjectionToken("Window");
 
 @Injectable()
 export class OidcProvider implements AuthProvider {
@@ -20,9 +20,9 @@ export class OidcProvider implements AuthProvider {
 
   private manager: UserManager;
   private settings: any = {
-    client_id: 'sitefinity',
-    response_type: 'id_token token',
-    scope: 'openid profile',
+    client_id: "sitefinity",
+    response_type: "id_token token",
+    scope: "openid profile",
     automaticSilentRenew: true,
     filterProtocolClaims: true,
     loadUserInfo: true
@@ -49,7 +49,7 @@ export class OidcProvider implements AuthProvider {
     this.settings.authority = `${settings.url}/${OPEN_ID_PATH}`;
     this.settings.post_logout_redirect_uri = this.getAbsoluteUrl(`/auth/oidc/${AUTH_ROUTE_PATHS.SIGN_OUT_REDIRECT}`);
     this.settings.redirect_uri = this.getAbsoluteUrl(`/auth/oidc/${AUTH_ROUTE_PATHS.SIGN_IN_REDIRECT}`);
-    this.settings.silent_redirect_uri = this.getAbsoluteUrl('/assets/auth/silent-renew.html');
+    this.settings.silent_redirect_uri = this.getAbsoluteUrl("/assets/auth/silent-renew.html");
     this.manager = new UserManager(this.settings);
     this.attachEvents();
   }

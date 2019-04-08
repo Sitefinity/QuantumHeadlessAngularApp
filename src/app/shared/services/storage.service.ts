@@ -1,9 +1,9 @@
-import {Injectable, InjectionToken} from '@angular/core';
+import {Injectable, InjectionToken} from "@angular/core";
 
-export const LOCAL_STORAGE = new InjectionToken('LocalStorage');
+export const LOCAL_STORAGE = new InjectionToken("LocalStorage");
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class StorageService {
   constructor(private storage: Storage) { }

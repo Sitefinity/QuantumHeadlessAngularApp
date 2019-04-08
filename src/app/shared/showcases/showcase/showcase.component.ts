@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {Observable, Subscription} from 'rxjs';
-import {Showcase} from '../showcases.component';
-import {RxBaseComponent} from '../../common/rx-base/rx-base.component';
-import {ShowcasesService} from '../../services/showcases.service';
+import { Component, OnInit } from "@angular/core";
+import {ActivatedRoute} from "@angular/router";
+import {Observable, Subscription} from "rxjs";
+import {Showcase} from "../showcases.component";
+import {RxBaseComponent} from "../../common/rx-base/rx-base.component";
+import {ShowcasesService} from "../../services/showcases.service";
 
 @Component({
-  selector: 'app-showcase',
-  templateUrl: './showcase.component.html'
+  selector: "app-showcase",
+  templateUrl: "./showcase.component.html"
 })
 export class ShowcaseComponent implements OnInit {
   showcase: Observable<Showcase>;
@@ -19,7 +19,7 @@ export class ShowcaseComponent implements OnInit {
   }
 
   getShowcase() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get("id");
     if (id) {
       this.showcase = this.showcasesService.getShowcaseById(id);
     }

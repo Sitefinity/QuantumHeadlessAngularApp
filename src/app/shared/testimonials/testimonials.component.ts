@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import {TestimonialsService} from '../services/testimonials.service';
-import { CarouselConfig } from 'ngx-bootstrap/carousel';
-import {Observable} from 'rxjs';
-import {Router} from '@angular/router';
-import {ROUTE_PATHS} from '../../app-routing/route-paths';
+import { Component, OnInit } from "@angular/core";
+import { TestimonialsService } from "../services/testimonials.service";
+import { CarouselConfig } from "ngx-bootstrap/carousel";
+import { Observable } from "rxjs";
+import { Router } from "@angular/router";
+import { ROUTE_PATHS } from "../../app-routing/route-paths";
 
 @Component({
-  selector: 'app-testimonials',
-  templateUrl: './testimonials.component.html',
+  selector: "app-testimonials",
+  templateUrl: "./testimonials.component.html",
   providers: [
     { provide: CarouselConfig, useValue: { interval: 8000, noPause: true, showIndicators: true } }
   ]

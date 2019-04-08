@@ -1,8 +1,8 @@
-import {Component, Output, EventEmitter, Input} from '@angular/core';
+import { Component, Output, EventEmitter, Input } from "@angular/core";
 
 @Component({
-  selector: 'app-taxa',
-  templateUrl: './taxa.component.html'
+  selector: "app-taxa",
+  templateUrl: "./taxa.component.html"
 })
 export class TaxaComponent {
   @Input() taxas: Taxa[];

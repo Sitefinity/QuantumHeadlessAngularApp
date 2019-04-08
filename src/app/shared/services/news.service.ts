@@ -1,15 +1,15 @@
-import {Injectable} from '@angular/core';
-import {SitefinityService} from './sitefinity.service';
-import {ReplaySubject, Observable} from 'rxjs';
-import {NewsItem} from '../news/newsitems/newsitems.component';
+import { Injectable } from "@angular/core";
+import { SitefinityService } from "./sitefinity.service";
+import { ReplaySubject, Observable } from "rxjs";
+import { NewsItem } from "../news/newsitems/newsitems.component";
 export const newsItemsDataOptions = {
-  urlName: 'newsitems',
-  providerName: 'OpenAccessDataProvider',
-  cultureName: 'en'
+  urlName: "newsitems",
+  providerName: "OpenAccessDataProvider",
+  cultureName: "en"
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class NewsService {
 
@@ -21,16 +21,16 @@ export class NewsService {
     if ((take !== null && take !== undefined) && (skip !== null && skip !== undefined)) {
       query = this.sitefinity
         .query
-        .select('Title', 'Id', 'Content', 'DateCreated', 'PublicationDate', 'Summary', 'UrlName', 'Author', 'Tags', 'Category', 'Featured')
-        .expand('Thumbnail')
-        .order('PublicationDate desc')
+        .select("Title", "Id", "Content", "DateCreated", "PublicationDate", "Summary", "UrlName", "Author", "Tags", "Category", "Featured")
+        .expand("Thumbnail")
+        .order("PublicationDate desc")
         .skip(skip).take(take);
     } else {
       query = this.sitefinity
         .query
-        .select('Title', 'Id', 'Content', 'DateCreated', 'PublicationDate', 'Summary', 'UrlName', 'Author', 'Tags', 'Category', 'Featured')
-        .expand('Thumbnail')
-        .order('PublicationDate desc');
+        .select("Title", "Id", "Content", "DateCreated", "PublicationDate", "Summary", "UrlName", "Author", "Tags", "Category", "Featured")
+        .expand("Thumbnail")
+        .order("PublicationDate desc");
     }
       this.sitefinity.instance.data(newsItemsDataOptions).get({
       query: query,
@@ -45,9 +45,9 @@ export class NewsService {
     this.sitefinity.instance.data(newsItemsDataOptions).get({
       query: this.sitefinity
         .query
-        .select('Title', 'Id', 'Content', 'DateCreated', 'Summary', 'UrlName', 'Author')
-        .expand('Thumbnail')
-        .order('Title desc')
+        .select("Title", "Id", "Content", "DateCreated", "Summary", "UrlName", "Author")
+        .expand("Thumbnail")
+        .order("Title desc")
         .where()
         .any()
         .eq(propertyName, taxaId)
@@ -64,9 +64,9 @@ export class NewsService {
           key: id,
           query: this.sitefinity
             .query
-            .select('Title', 'Id', 'Content', 'DateCreated', 'Summary', 'UrlName', 'Author', 'Tags')
-            .expand('Thumbnail')
-            .order('Title desc'),
+            .select("Title", "Id", "Content", "DateCreated", "Summary", "UrlName", "Author", "Tags")
+            .expand("Thumbnail")
+            .order("Title desc"),
           successCb: (data: NewsItem) => {newsReplaySubject.next(data); },
           failureCb: data => console.log(data)
         });

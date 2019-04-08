@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import {NewsService} from '../../services/news.service';
-import { RxBaseComponent} from '../../common/rx-base/rx-base.component';
-import {Observable, ReplaySubject, Subscription} from 'rxjs';
-import {Taxa, TaxaOptions} from '../../taxa/taxa.component';
-import {tagsOptions, categoriesOptions, TaxaService, tagsProperty, categoryProperty} from '../../services/taxa.service';
+import { Component, OnInit } from "@angular/core";
+import {NewsService } from "../../services/news.service";
+import { RxBaseComponent } from "../../common/rx-base/rx-base.component";
+import { Observable, ReplaySubject, Subscription } from "rxjs";
+import { Taxa, TaxaOptions } from "../../taxa/taxa.component";
+import { tagsOptions, categoriesOptions, TaxaService, tagsProperty, categoryProperty } from "../../services/taxa.service";
 
 @Component({
-  selector: 'app-newsitems',
-  templateUrl: './newsitems.component.html'
+  selector: "app-newsitems",
+  templateUrl: "./newsitems.component.html"
 })
 export class NewsItemsComponent extends RxBaseComponent implements OnInit {
   newsItems: NewsItem[] = [];

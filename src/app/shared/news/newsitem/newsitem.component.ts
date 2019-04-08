@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {NewsItem} from '../newsitems/newsitems.component';
-import {NewsService} from '../../services/news.service';
-import {RxBaseComponent} from '../../common/rx-base/rx-base.component';
-import {Subscription} from 'rxjs';
-import {DomSanitizer, SafeHtml} from '@angular/platform-browser';
+import { Component, OnInit } from "@angular/core";
+import { ActivatedRoute } from "@angular/router";
+import { NewsItem } from "../newsitems/newsitems.component";
+import { NewsService } from "../../services/news.service";
+import { RxBaseComponent } from "../../common/rx-base/rx-base.component";
+import { Subscription } from "rxjs";
+import { DomSanitizer, SafeHtml } from "@angular/platform-browser";
 
 @Component({
-  selector: 'app-newsitem',
-  templateUrl: './newsitem.component.html'
+  selector: "app-newsitem",
+  templateUrl: "./newsitem.component.html"
 })
 export class NewsItemComponent extends RxBaseComponent implements OnInit {
   newsItem: NewsItem;
@@ -25,7 +25,7 @@ export class NewsItemComponent extends RxBaseComponent implements OnInit {
   }
 
   getNewsItem() {
-    const id = this.route.snapshot.paramMap.get('id');
+    const id = this.route.snapshot.paramMap.get("id");
     if (id) {
       this.subscription = this.newsService.getNewsItem(id).subscribe((data) => {
         this.newsItem = data;

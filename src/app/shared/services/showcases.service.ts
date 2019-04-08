@@ -1,13 +1,13 @@
-import {Injectable} from '@angular/core';
-import {ReplaySubject} from 'rxjs';
-import {SitefinityService} from './sitefinity.service';
-import {Showcase} from '../showcases/showcases.component';
+import { Injectable } from "@angular/core";
+import { ReplaySubject } from "rxjs";
+import { SitefinityService } from "./sitefinity.service";
+import { Showcase } from "../showcases/showcases.component";
 export const showcasesDataOptions = {
-  urlName: 'showcases'
+  urlName: "showcases"
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ShowcasesService {
 
@@ -18,9 +18,9 @@ export class ShowcasesService {
     this.sitefinity.instance.data(showcasesDataOptions).get({
       query: this.sitefinity
         .query
-        .select('Title', 'Client', 'Website', 'Challenge', 'Solution', 'Results', 'PublicationDate')
-        .expand('Thumbnail', 'Download')
-        .order('PublicationDate desc'),
+        .select("Title", "Client", "Website", "Challenge", "Solution", "Results", "PublicationDate")
+        .expand("Thumbnail", "Download")
+        .order("PublicationDate desc"),
       successCb: data => showcasesReplaySubject.next(data.value as Showcase[]),
       failureCb: data => console.log(data)
     });
@@ -34,9 +34,9 @@ export class ShowcasesService {
       key: id,
       query: this.sitefinity
         .query
-        .select('Title', 'Client', 'Website', 'Challenge', 'Solution', 'Results', 'PublicationDate')
-        .expand('Thumbnail', 'Download')
-        .order('PublicationDate desc'),
+        .select("Title", "Client", "Website", "Challenge", "Solution", "Results", "PublicationDate")
+        .expand("Thumbnail", "Download")
+        .order("PublicationDate desc"),
       successCb: data => showcaseReplaySubject.next(data),
       failureCb: data => console.log(data)
     });

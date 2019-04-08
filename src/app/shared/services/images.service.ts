@@ -1,20 +1,20 @@
-import { Injectable } from '@angular/core';
-import {endpoint, SitefinityService} from './sitefinity.service';
-import {BehaviorSubject, Observable, ReplaySubject} from 'rxjs';
-import {Album, Image} from '../news/newsitems/newsitems.component';
-import {SettingsService} from './settings.service';
-import {DomSanitizer} from '@angular/platform-browser';
+import { Injectable } from "@angular/core";
+import { endpoint, SitefinityService } from "./sitefinity.service";
+import { Observable, ReplaySubject } from "rxjs";
+import { Album, Image } from "../news/newsitems/newsitems.component";
+import { SettingsService } from "./settings.service";
+import { DomSanitizer } from "@angular/platform-browser";
 
 export const imageDataOptions = {
-  urlName: 'images',
+  urlName: "images",
 };
 
 export const albumDataOptions = {
-  urlName: 'albums',
+  urlName: "albums",
 };
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root"
 })
 export class ImagesService {
 
@@ -25,9 +25,9 @@ export class ImagesService {
     this.sitefinity.instance.data(imageDataOptions).get({
       query: this.sitefinity
         .query
-        .order('Title desc')
+        .order("Title desc")
         .where()
-        .eq('Title', title)
+        .eq("Title", title)
         .done(),
       successCb: data => replaySubjectImage.next(data.value[0]),
       failureCb: data => console.log(data)
@@ -40,9 +40,9 @@ export class ImagesService {
     this.sitefinity.instance.data(albumDataOptions).get({
       query: this.sitefinity
         .query
-        .order('Title desc')
+        .order("Title desc")
         .where()
-        .eq('Title', title)
+        .eq("Title", title)
         .done(),
       successCb: data => replaySubjectLibrary.next(data.value[0]),
       failureCb: data => console.log(data)
@@ -76,8 +76,8 @@ export class ImagesService {
     const progress = () => {};
 
     const batch = this.sitefinity.instance.batch(success, reject, progress, {
-      providerName: 'OpenAccessDataProvider',
-      cultureName: 'en'
+      providerName: "OpenAccessDataProvider",
+      cultureName: "en"
     });
 
     const transaction = batch.beginTransaction();
@@ -93,7 +93,7 @@ export class ImagesService {
     };
 
     const uploadedFile = transaction.upload({
-      entitySet: 'images',
+      entitySet: "images",
       data: file,
       dataUrl: safeUrl,
       contentType: file.type,
@@ -102,10 +102,10 @@ export class ImagesService {
     });
 
     transaction.operation({
-      entitySet: 'images',
+      entitySet: "images",
       key: uploadedFile,
       data: {
-        action: 'Publish'
+        action: "Publish"
       }
     });
     batch.endTransaction(transaction);
@@ -120,7 +120,7 @@ export class ImagesService {
         key: relationId,
         navigationProperty: relationalFieldName
       });
-      const relationLink = this.settingsService.url + endpoint + 'images(' + itemId + ')';
+      const relationLink = this.settingsService.url + endpoint + "images(" + itemId + ")";
 
       transaction.createRelated({
         entitySet: entitySet,
@@ -148,7 +148,7 @@ export class ImagesService {
 
   private isObject(val) {
     if (val === null) { return false; }
-    return ( (typeof val === 'function') || (typeof val === 'object') );
+    return ( (typeof val === "function") || (typeof val === "object") );
   }
 }
 

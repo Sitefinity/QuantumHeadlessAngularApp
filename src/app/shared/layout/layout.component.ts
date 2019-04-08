@@ -1,14 +1,14 @@
-import { Component, OnInit } from '@angular/core';
-import {Image} from '../news/newsitems/newsitems.component';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {ActivatedRoute, NavigationEnd, Router, RoutesRecognized} from '@angular/router';
-import {ImagesService} from '../services/images.service';
-import {Title} from '@angular/platform-browser';
-import {filter, map, mergeMap} from 'rxjs/internal/operators';
+import { Component, OnInit } from "@angular/core";
+import { Image } from "../news/newsitems/newsitems.component";
+import { BehaviorSubject, Observable } from "rxjs";
+import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
+import { ImagesService } from "../services/images.service";
+import { Title} from "@angular/platform-browser";
+import { filter, map, mergeMap } from "rxjs/internal/operators";
 
 @Component({
-  selector: 'app-layout',
-  templateUrl: './layout.component.html'
+  selector: "app-layout",
+  templateUrl: "./layout.component.html"
 })
 export class LayoutComponent implements OnInit {
 
@@ -28,7 +28,7 @@ export class LayoutComponent implements OnInit {
         }
         return route;
       }),
-      filter((route) => route.outlet === 'primary'),
+      filter((route) => route.outlet === "primary"),
       mergeMap((route) => route.data)
     )
       .subscribe((event) => {
@@ -40,12 +40,12 @@ export class LayoutComponent implements OnInit {
       this.setImageAndTitle(routeData);
     });
 
-    this.logoImage = this.imageService.getImageByTitle('Logo_Quantum');
+    this.logoImage = this.imageService.getImageByTitle("Logo_Quantum");
   }
 
   setImageAndTitle(data: any) {
-    this.bannerImage = this.imageService.getImageByTitle(data['image']);
-    this.title.next(data['title']);
-    this.titleService.setTitle(data['title']);
+    this.bannerImage = this.imageService.getImageByTitle(data["image"]);
+    this.title.next(data["title"]);
+    this.titleService.setTitle(data["title"]);
   }
 }
