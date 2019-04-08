@@ -1,9 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import {ActivatedRoute} from "@angular/router";
-import {Observable, Subscription} from "rxjs";
-import {Showcase} from "../showcases.component";
-import {RxBaseComponent} from "../../common/rx-base/rx-base.component";
-import {ShowcasesService} from "../../services/showcases.service";
+import { ActivatedRoute } from "@angular/router";
+import { Observable } from "rxjs";
+import { Showcase} from "../showcases.component";
+import { ShowcasesService } from "../../services/showcases.service";
 
 @Component({
   selector: "app-showcase",

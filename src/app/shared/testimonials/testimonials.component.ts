@@ -31,9 +31,10 @@ export class TestimonialsComponent implements OnInit {
 }
 
 export class TestimonialImage {
-  file: any;
-  width: number;
-  height: number;
+  File: any;
+  Width: number;
+  Height: number;
+  Url?: string;
 }
 
 export class Testimonial {

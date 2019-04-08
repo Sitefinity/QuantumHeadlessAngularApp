@@ -30,22 +30,8 @@
           </a>
         </div>
       </div>
-
     </div>
-    <div *ngIf="(categories | async) && (tags | async)" class="col-md-3 gray_column">
-      <div class="row">
-        <div class="col-md-12">
-          <div class="sf-Long-text">
-            <h5 style="text-align: left">Categories</h5>
-          </div>
-          <app-taxa classes="list-unstyled categories-list" [taxas]="categories | async" (taxaClicked)="getNewsItemsByTaxa(categoryName, $event)"></app-taxa>
-          <div class="sf-Long-text">
-            <h5 style="text-align: left">Tags</h5>
-          </div>
-          <app-taxa classes="categories-list list-unstyled" [taxas]="tags | async" (taxaClicked)="getNewsItemsByTaxa(tagsName, $event)"></app-taxa>
-        </div>
-      </div>
-    </div>
+    <app-sidebar [contentItems]="allNewsItems" (taxaClicked)="getNewsItemsByTaxa($event)"></app-sidebar>
   </div>
 </div>
 

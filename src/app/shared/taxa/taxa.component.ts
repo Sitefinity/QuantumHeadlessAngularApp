@@ -9,7 +9,7 @@ export class TaxaComponent {
   @Input() classes: string;
   @Output() taxaClicked: EventEmitter<any> = new EventEmitter();
 
-  handleClick(taxa: Taxa) {
+  handleClick(taxa: string) {
     this.taxaClicked.emit(taxa);
   }
 }

@@ -33,6 +33,12 @@ export class CommentsComponent implements OnInit {
     this.getComments();
   }
 
+  login() {
+    this.authService.init().subscribe(() => {
+      this.authService.signIn(this.router.routerState.snapshot.url).subscribe();
+    });
+  }
+
   submitComment(form: any) {
     if (form.valid) {
       this.creatingComment = true;
@@ -44,7 +50,7 @@ export class CommentsComponent implements OnInit {
     }
   }
 
-  getComments() {
+  private getComments() {
     this.commentsService.getComments(newsItemsDataOptions, this.commentableItemId).subscribe((data: Comment[]) => {
       if (data) {
         if (this.comments.length === 0) {
@@ -58,12 +64,6 @@ export class CommentsComponent implements OnInit {
         this.model.Message = null;
         this.creatingComment = false;
       }
-    });
-  }
-
-  login() {
-    this.authService.init().subscribe(() => {
-      this.authService.signIn(this.router.routerState.snapshot.url).subscribe();
     });
   }
 }

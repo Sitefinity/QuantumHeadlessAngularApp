@@ -1,0 +1,14 @@
+<div *ngIf="(categories | async) && (tags | async)" class="col-md-3 gray_column">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="sf-Long-text">
+        <h5 class="text-align-left">Categories</h5>
+      </div>
+      <app-taxa classes="list-unstyled categories-list" [taxas]="categories | async" (taxaClicked)="onTaxaClicked(categoryName, $event)"></app-taxa>
+      <div class="sf-Long-text">
+        <h5 class="text-align-left">Tags</h5>
+      </div>
+      <app-taxa classes="categories-list list-unstyled" [taxas]="tags | async" (taxaClicked)="onTaxaClicked(tagsName, $event)"></app-taxa>
+    </div>
+  </div>
+</div>

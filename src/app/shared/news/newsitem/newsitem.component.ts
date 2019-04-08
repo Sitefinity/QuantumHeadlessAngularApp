@@ -21,10 +21,9 @@ export class NewsItemComponent extends RxBaseComponent implements OnInit {
 
   ngOnInit() {
     this.getNewsItem();
-    this.registerSubscription(this.subscription);
   }
 
-  getNewsItem() {
+  private getNewsItem() {
     const id = this.route.snapshot.paramMap.get("id");
     if (id) {
       this.subscription = this.newsService.getNewsItem(id).subscribe((data) => {
@@ -33,6 +32,8 @@ export class NewsItemComponent extends RxBaseComponent implements OnInit {
           this.newsItemContent = this.sanitizer.bypassSecurityTrustHtml(data.Content);
         }
       });
+
+      this.registerSubscription(this.subscription);
     }
   }
 }

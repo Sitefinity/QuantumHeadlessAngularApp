@@ -28,15 +28,15 @@ export class ConfigComponent implements OnInit {
   }
 
   onSave() {
-    this.currentUrl = this.parseSitefinityUrlInput(this.currentUrl);
+    this.currentUrl = ConfigComponent.parseSitefinityUrlInput(this.currentUrl);
     this.redirectToHome();
   }
 
-  redirectToHome() {
+  private redirectToHome() {
     this.router.navigate([ROUTE_PATHS.LAYOUT]);
   }
 
-  private parseSitefinityUrlInput(str: string): string {
+  private static parseSitefinityUrlInput(str: string): string {
     // trim whitespaces
     str = str.trim();
 

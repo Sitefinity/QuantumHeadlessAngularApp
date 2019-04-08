@@ -38,7 +38,7 @@ export class AuthService {
     return this.provider.getUser();
   }
 
-  getProvider(): Observable<AuthProvider> {
+  private getProvider(): Observable<AuthProvider> {
     const ready = new ReplaySubject<AuthProvider>(1);
 
     this.initProvider(ready, this.oidcProvider);

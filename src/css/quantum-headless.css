@@ -80,3 +80,6 @@ list a {
 .container.container-small {
   width: 800px;
 }
+.text-align-left {
+  text-align: left;
+}

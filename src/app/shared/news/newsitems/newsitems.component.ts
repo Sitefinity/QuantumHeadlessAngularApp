@@ -1,9 +1,7 @@
 import { Component, OnInit } from "@angular/core";
 import {NewsService } from "../../services/news.service";
 import { RxBaseComponent } from "../../common/rx-base/rx-base.component";
-import { Observable, ReplaySubject, Subscription } from "rxjs";
-import { Taxa, TaxaOptions } from "../../taxa/taxa.component";
-import { tagsOptions, categoriesOptions, TaxaService, tagsProperty, categoryProperty } from "../../services/taxa.service";
+import { Observable, Subscription } from "rxjs";
 
 @Component({
   selector: "app-newsitems",
@@ -11,85 +9,59 @@ import { tagsOptions, categoriesOptions, TaxaService, tagsProperty, categoryProp
 })
 export class NewsItemsComponent extends RxBaseComponent implements OnInit {
   newsItems: NewsItem[] = [];
-  tags: Observable<Taxa[]>;
-  categories: Observable<Taxa[]>;
-  tagsName: string = tagsProperty;
-  categoryName: string = categoryProperty;
+  allNewsItems: Observable<NewsItem[]> = new Observable();
   private allItemsCount: number;
   private showMoreItemsLink = true;
-  private subscription: Subscription;
+  private newsSubscription: Subscription;
   private newsItemsCountSubscription: Subscription;
   private newsItemsForTagSubscription: Subscription;
-  private allNewsItemsSubscription: Subscription;
-  private taxaServiceSubscription: Subscription;
 
   get shouldShowLoadMore(): boolean {
     return (this.allItemsCount > this.newsItems.length) && this.showMoreItemsLink;
   }
 
-  constructor(private newsService: NewsService, private taxaService: TaxaService) {
+  constructor(private newsService: NewsService) {
     super();
   }
 
   ngOnInit() {
     this.getNewsItems();
-    this.getTagsAndCategories();
     this.getAllNewsItemsCount();
-    this.registerSubscription(this.subscription);
-    this.registerSubscription(this.newsItemsCountSubscription);
+  }
+
+  getNewsItemsByTaxa(event: any) {
+    const taxaName = event.taxaName;
+    const taxaId = event.taxa;
+    this.newsItemsForTagSubscription = this.newsService.getNewsByTaxa(taxaName, taxaId).subscribe((newsItems) => {
+      if (newsItems) {
+        this.newsItems = newsItems;
+      }
+    });
     this.registerSubscription(this.newsItemsForTagSubscription);
-    this.registerSubscription(this.taxaServiceSubscription);
+    this.showMoreItemsLink = false;
   }
 
   LoadMore() {
     this.getNewsItems();
   }
 
-  getTagsAndCategories() {
-    this.allNewsItemsSubscription = this.newsService.getNewsItems().subscribe((data: NewsItem[]) => {
-      this.tags = this.getTaxa(tagsOptions, tagsProperty);
-      this.categories = this.getTaxa(categoriesOptions, categoryProperty);
-    });
-  }
-
-  getTaxa(taxaOptions: TaxaOptions, propertyName: string): Observable<Taxa[]> {
-    const taxaReplaySubject = new ReplaySubject<Taxa[]>(1);
-    this.allNewsItemsSubscription = this.newsService.getNewsItems().subscribe((data: NewsItem[]) => {
-      const newsItemsTaxas: Array<string> = [];
-      if (data) {
-        data.forEach((newsItem) => {
-          if (newsItem[propertyName]) {
-            newsItemsTaxas.push(...newsItem[propertyName]);
-          }
-        });
-        this.taxaServiceSubscription = this.taxaService.getTaxaForIds(taxaOptions, newsItemsTaxas).subscribe(data => taxaReplaySubject.next(data));
-      }
-    });
-    return taxaReplaySubject.asObservable();
-  }
-
-
-  getNewsItems(): void {
-    this.subscription = this.newsService.getNewsItems(6, this.newsItems.length).subscribe((data: NewsItem[]) => {
+  private getNewsItems(): void {
+    this.allNewsItems = this.newsService.getNewsItems();
+    this.newsSubscription = this.newsService.getNewsItems(6, this.newsItems.length).subscribe((data: NewsItem[]) => {
       if (data) {
         this.newsItems.push(...data);
       }
     });
+
+    this.registerSubscription(this.newsSubscription);
   }
 
-  getNewsItemsByTaxa(taxaName: string, taxaId: string) {
-    this.newsItemsForTagSubscription = this.newsService.getNewsByTaxa(taxaName, taxaId).subscribe((newsItems) => {
-      if (newsItems) {
-        this.newsItems = newsItems;
-      }
-    });
-    this.showMoreItemsLink = false;
-  }
-
-  getAllNewsItemsCount() {
+  private getAllNewsItemsCount() {
     this.newsItemsCountSubscription = this.newsService.getAllNewsCount().subscribe((data) => {
       this.allItemsCount = data;
     });
+
+    this.registerSubscription(this.newsItemsCountSubscription);
   }
 }
 

@@ -43,7 +43,7 @@ export class LayoutComponent implements OnInit {
     this.logoImage = this.imageService.getImageByTitle("Logo_Quantum");
   }
 
-  setImageAndTitle(data: any) {
+  private setImageAndTitle(data: any) {
     this.bannerImage = this.imageService.getImageByTitle(data["image"]);
     this.title.next(data["title"]);
     this.titleService.setTitle(data["title"]);

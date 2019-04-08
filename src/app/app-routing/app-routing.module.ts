@@ -11,7 +11,6 @@ import { ConfigComponent } from "../shared/config/config.component";
 import { ConfigGuard } from "../config.guard";
 import { AUTH_ROUTE_PATHS, ROUTE_PATHS } from "./route-paths";
 import { LayoutComponent } from "../shared/layout/layout.component";
-import {config} from "rxjs";
 import { SignInRedirectComponent } from "../shared/auth/oidc/sign-in-redirect/sign-in-redirect.component";
 import { SignOutRedirectComponent } from "../shared/auth/oidc/sign-out-redirect/sign-out-redirect.component";
 import { AuthGuard } from "../shared/auth/auth.guard";

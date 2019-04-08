@@ -26,6 +26,7 @@ import { AUTH_PROVIDER_TOKEN } from "./shared/auth/auth.provider";
 import { PathLocationStrategy } from "@angular/common";
 import { CommentsComponent } from "./shared/comments/comments.component";
 import { TestimonialFormComponent } from "./shared/testimonials/testimonial-form/testimonial-form.component";
+import { SidebarComponent } from './shared/sidebar/sidebar.component';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { TestimonialFormComponent } from "./shared/testimonials/testimonial-form
     SignInRedirectComponent,
     SignOutRedirectComponent,
     CommentsComponent,
-    TestimonialFormComponent
+    TestimonialFormComponent,
+    SidebarComponent
   ],
   imports: [
     BrowserModule,

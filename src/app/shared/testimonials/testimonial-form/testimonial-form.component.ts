@@ -35,7 +35,7 @@ export class TestimonialFormComponent {
     fr.onload = () => {
       const img = new Image();
       img.onload = () => {
-        this.model.Photo = {file: image, width: img.width, height: img.height};
+        this.model.Photo = {File: image, Width: img.width, Height: img.height};
       };
 
       img.src = fr.result;
