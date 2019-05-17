@@ -81,7 +81,7 @@ export class ImagesService {
     });
 
     const transaction = batch.beginTransaction();
-    const file = imageProperties.file;
+    const file = imageProperties.File || imageProperties.file;
     const url = window.URL.createObjectURL(file);
     const safeUrl = this.sanitizer.bypassSecurityTrustUrl(url);
     const imagePrimitives: ImagePrimitives = {
@@ -89,7 +89,7 @@ export class ImagesService {
       DirectUpload: true,
       Height: imageProperties.height,
       Width: imageProperties.width,
-      Title: imageProperties.file.name
+      Title: imageProperties.File.name || imageProperties.file
     };
 
     const uploadedFile = transaction.upload({
