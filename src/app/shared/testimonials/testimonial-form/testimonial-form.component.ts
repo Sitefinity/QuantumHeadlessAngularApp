@@ -38,7 +38,7 @@ export class TestimonialFormComponent {
         this.model.Photo = {File: image, Width: img.width, Height: img.height};
       };
 
-      img.src = fr.result;
+      img.src = fr.result.toString();
     };
 
     fr.readAsDataURL(image);
