@@ -6,6 +6,7 @@ import { SearchService} from "../services/search.service";
   templateUrl: "./search.component.html"
 })
 export class SearchComponent {
+  open: boolean;
 
   constructor(private searchService: SearchService) {}
 
