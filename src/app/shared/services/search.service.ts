@@ -1,9 +1,10 @@
-import {EventEmitter, Injectable, Output} from '@angular/core';
+import { EventEmitter, Injectable, Output, Directive } from '@angular/core';
 import {SitefinityService} from './sitefinity.service';
 import {Observable, ReplaySubject} from 'rxjs';
 import {Router} from '@angular/router';
 import {SearchResultItem} from '../search/search.component';
 
+@Directive()
 @Injectable({
   providedIn: 'root'
 })
