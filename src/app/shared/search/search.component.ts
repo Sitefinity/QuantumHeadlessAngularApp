@@ -7,6 +7,7 @@ import {Router} from '@angular/router';
   templateUrl: './search.component.html'
 })
 export class SearchComponent {
+  open: boolean;
 
   constructor(private searchService: SearchService) {}
 
