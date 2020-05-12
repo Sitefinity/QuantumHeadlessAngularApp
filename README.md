@@ -16,9 +16,11 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 * Add **http://localhost:4200** and **http://quantum-headless.sitefinity.site**
 
 3. Download this repo.
-4. Run the project: 
+4. Run:
+  `npm install`
+5. Run the project: 
   `ng serve`
-5. Enter the url of the Sitefinity sandbox and save.
+6. Enter the url of the Sitefinity sandbox and save.
 
 ## Test it online
 
