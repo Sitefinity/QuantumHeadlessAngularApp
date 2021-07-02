@@ -17,6 +17,7 @@ import {ConfigComponent} from './shared/config/config.component';
 import {FormsModule} from '@angular/forms';
 import {LOCAL_STORAGE, StorageService} from './shared/services/storage.service';
 import {LayoutComponent} from './shared/layout/layout.component';
+import { RxBaseComponent } from './shared/common/rx-base/rx-base.component';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import {LayoutComponent} from './shared/layout/layout.component';
     TaxaComponent,
     ShowcaseComponent,
     ConfigComponent,
-    LayoutComponent
+    LayoutComponent,
+    RxBaseComponent
   ],
   imports: [
     BrowserModule,
