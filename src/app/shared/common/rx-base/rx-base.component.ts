@@ -1,6 +1,8 @@
-import {OnDestroy, OnInit} from "@angular/core";
-import {Subscription} from "rxjs";
+import {OnDestroy, OnInit} from '@angular/core';
+import {Subscription} from 'rxjs';
+import { Component } from '@angular/core';
 
+@Component({ template: "" })
 export class RxBaseComponent implements OnDestroy {
   private subscriptions: Array<Subscription> = [];
 

@@ -27,6 +27,7 @@ import { PathLocationStrategy } from "@angular/common";
 import { CommentsComponent } from "./shared/comments/comments.component";
 import { TestimonialFormComponent } from "./shared/testimonials/testimonial-form/testimonial-form.component";
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
+import { RxBaseComponent } from "./shared/common/rx-base/rx-base.component";
 
 @NgModule({
   declarations: [
@@ -46,7 +47,8 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
     SignOutRedirectComponent,
     CommentsComponent,
     TestimonialFormComponent,
-    SidebarComponent
+    SidebarComponent,
+    RxBaseComponent
   ],
   imports: [
     BrowserModule,
