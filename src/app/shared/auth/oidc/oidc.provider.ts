@@ -1,5 +1,5 @@
-import { Inject, Injectable, InjectionToken } from "@angular/core";
-import { AuthProvider, QuantumUser, Token } from "../auth.provider";
+import {ClassProvider, Inject, Injectable, InjectionToken} from '@angular/core';
+import {AUTH_PROVIDER_TOKEN, AuthProvider, QuantumUser, Token} from '../auth.provider';
 import { UserManager, User } from "oidc-client";
 import { SettingsService } from "../../services/settings.service";
 import { of as observableOf, from as observableFrom, combineLatest as observableCombineLatest, Observable, ReplaySubject } from "rxjs";
@@ -9,16 +9,19 @@ import { switchMap } from "rxjs/operators";
 import { Router } from "@angular/router";
 import { AUTH_ROUTE_PATHS } from "../../../app-routing/route-paths";
 import { PathLocationStrategy } from "@angular/common";
+import { UrlService } from '../../services/url.service';
+import { WINDOW_TOKEN } from '../../common.constants';
 
 const OPEN_ID_PATH = "Sitefinity/Authenticate/OpenID";
-const FORWARD_SLASH = "/";
-export const WINDOW_TOKEN = new InjectionToken("Window");
+
+const OIDC_PROVIDER_NAME = "openid";
 
 @Injectable()
 export class OidcProvider implements AuthProvider {
   private token = new ReplaySubject<Token>(1);
 
   private manager: UserManager;
+  private authSettingsUrl: string;
   private settings: any = {
     client_id: "sitefinity",
     response_type: "id_token token",
@@ -27,31 +30,21 @@ export class OidcProvider implements AuthProvider {
     filterProtocolClaims: true,
     loadUserInfo: true
   };
-  private static trimForwardSlash(path: string): string {
-    let result = path;
-
-    while (result.startsWith(FORWARD_SLASH)) {
-      result = result.substring(FORWARD_SLASH.length);
-    }
-
-    while (result.endsWith(FORWARD_SLASH)) {
-      result = result.substring(0, result.length - FORWARD_SLASH.length);
-    }
-
-    return result;
-  }
-
-  constructor(settings: SettingsService,
+  constructor(private settingsProv: SettingsService,
               private http: HttpClient,
               private router: Router,
               private locationStrategy: PathLocationStrategy,
-              @Inject(WINDOW_TOKEN) private window: Window) {
-    this.settings.authority = `${settings.url}/${OPEN_ID_PATH}`;
-    this.settings.post_logout_redirect_uri = this.getAbsoluteUrl(`/auth/oidc/${AUTH_ROUTE_PATHS.SIGN_OUT_REDIRECT}`);
-    this.settings.redirect_uri = this.getAbsoluteUrl(`/auth/oidc/${AUTH_ROUTE_PATHS.SIGN_IN_REDIRECT}`);
-    this.settings.silent_redirect_uri = this.getAbsoluteUrl("/assets/auth/silent-renew.html");
-    this.manager = new UserManager(this.settings);
-    this.attachEvents();
+              @Inject(WINDOW_TOKEN) private window: Window,
+              private urlService: UrlService) {
+  }
+
+  init(): Observable<void> {
+    this.initSettingsObj();
+    return this.http.get(this.authSettingsUrl).pipe(map((authSettings: AuthSettings) => {
+      this.settings.scope = authSettings.Scope;
+      this.manager = new UserManager(this.settings);
+      this.attachEvents();
+    }));
   }
 
   attachEvents(): void {
@@ -68,6 +61,40 @@ export class OidcProvider implements AuthProvider {
       type: user.token_type,
       value: user.access_token
     });
+  }
+
+  getName(): string {
+    return OIDC_PROVIDER_NAME;
+  }
+
+  getPriority(): number {
+    return 3;
+  }
+
+  isAvailable(): Observable<boolean> {
+    this.initSettingsObj();
+    const url = this.settings.authority + "/.well-known/openid-configuration";
+    return this.http.get(url, { observe: "response", responseType: "text" }).pipe(map(x => {
+      const header = x.headers.get("content-type");
+      if (header && header.startsWith("application/json")) {
+        // This is done to avoid multiple request. This ways the oidc library doesn't
+        // make the same request twice.
+        this.settings.metadata = JSON.parse(x.body);
+        return true;
+      }
+
+      return false;
+    }));
+  }
+
+  private initSettingsObj(): any {
+    if (!this.settings.authority && this.settingsProv.url) {
+      this.settings.authority = `${this.settingsProv.url}/${OPEN_ID_PATH}`;
+      this.settings.post_logout_redirect_uri = this.urlService.getAbsoluteUrl(`/auth/oidc/${AUTH_ROUTE_PATHS.SIGN_OUT_REDIRECT}`);
+      this.settings.redirect_uri = this.urlService.getAbsoluteUrl(`/auth/oidc/${AUTH_ROUTE_PATHS.SIGN_IN_REDIRECT}`);
+      this.settings.silent_redirect_uri = this.urlService.getAbsoluteUrl("/assets/auth/silent-renew.html");
+      this.authSettingsUrl = `${this.settingsProv.systemServiceUrl}Default.AuthSettings(clientId='${this.settings.client_id}')`;
+    }
   }
 
   signIn(returnUrl: string): Observable<void> {
@@ -125,27 +152,14 @@ export class OidcProvider implements AuthProvider {
     const signIn = this.manager.signinRedirect({ data: returnUrl });
     return observableFrom(signIn);
   }
-
-  private getAbsoluteUrl(urlPath: string): string {
-    const baseUrl = this.locationStrategy.getBaseHref();
-    const trimmedUrlPath = OidcProvider.trimForwardSlash(urlPath);
-
-    let result = this.window.location.origin;
-
-    if (baseUrl !== FORWARD_SLASH) {
-      result = result + baseUrl;
-    }
-
-    if (trimmedUrlPath.length === 0) {
-      return result;
-    }
-
-    if (!result.endsWith(FORWARD_SLASH)) {
-      result = result + FORWARD_SLASH;
-    }
-
-    result = result + trimmedUrlPath;
-
-    return result;
-  }
 }
+
+interface AuthSettings {
+  Scope: string
+}
+
+export const OIDC_PROVIDER: ClassProvider = {
+  multi: true,
+  provide: AUTH_PROVIDER_TOKEN,
+  useClass: OidcProvider
+};

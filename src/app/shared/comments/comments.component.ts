@@ -3,6 +3,7 @@ import { AuthService } from "../auth/auth.service";
 import { CommentsService } from "../services/comments.service";
 import { newsItemsDataOptions } from "../services/news.service";
 import { Router } from "@angular/router";
+import {UserService} from '../services/user.service';
 
 @Component({
   selector: "app-comments",
@@ -16,14 +17,17 @@ export class CommentsComponent implements OnInit {
   creatingComment: boolean;
   model: Comment = new Comment();
 
-  constructor(private authService: AuthService, private commentsService: CommentsService, private router: Router) {}
+  constructor(private authService: AuthService,
+              private commentsService: CommentsService,
+              private router: Router,
+              private userService: UserService) {}
 
   ngOnInit() {
     this.authService.init().subscribe(() => {
       this.authService.isLoggedIn().subscribe((isLoggedIn) => {
         if (isLoggedIn) {
           this.showCommentsForm = true;
-          this.authService.getUser().subscribe((user) => {
+          this.userService.getUserInfo().subscribe((user) => {
             this.model.Name = user.Username;
             this.model.ProfilePictureUrl = user.Picture;
           });

@@ -15,6 +15,7 @@ import { SignInRedirectComponent } from "../shared/auth/oidc/sign-in-redirect/si
 import { SignOutRedirectComponent } from "../shared/auth/oidc/sign-out-redirect/sign-out-redirect.component";
 import { AuthGuard } from "../shared/auth/auth.guard";
 import { TestimonialFormComponent } from "../shared/testimonials/testimonial-form/testimonial-form.component";
+import {OauthSignInRedirectComponent} from '../shared/auth/oauth/oauth-sign-in-redirect.component';
 
 
 const routes: Routes = [
@@ -40,6 +41,13 @@ const routes: Routes = [
           },
           {
             path: AUTH_ROUTE_PATHS.SIGN_OUT_REDIRECT, component: SignOutRedirectComponent
+          }
+        ]
+      },
+      {
+        path: "oauth", children: [
+          {
+            path: AUTH_ROUTE_PATHS.SIGN_IN_REDIRECT, component: OauthSignInRedirectComponent
           }
         ]
       }
