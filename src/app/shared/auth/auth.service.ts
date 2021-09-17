@@ -34,10 +34,6 @@ export class AuthService {
     return this.provider.isLoggedIn();
   }
 
-  getUser(): Observable<any> {
-    return this.provider.getUser();
-  }
-
   private getProvider(): Observable<AuthProvider> {
     // the provider is an observable as we do not know which provider we have to work with - oidc or oauth
     const ready = new ReplaySubject<AuthProvider>(1);

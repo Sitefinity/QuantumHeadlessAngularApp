@@ -28,7 +28,7 @@ import { TestimonialFormComponent } from "./shared/testimonials/testimonial-form
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { RxBaseComponent } from "./shared/common/rx-base/rx-base.component";
 import { OAUTH_PROVIDER } from './shared/auth/oauth/oauth.provider';
-import {WINDOW_TOKEN} from './shared/common.constants';
+import { WINDOW_TOKEN } from './shared/common.constants';
 
 @NgModule({
   declarations: [

@@ -47,10 +47,6 @@ export class OauthProvider implements AuthProvider {
         return of(null);
     }
 
-    getUser(): Observable<QuantumUser> {
-        return null;
-    }
-
     signIn(returnUrl: string): Observable<void> {
         const redirectUri = encodeURIComponent(this.settings.redirect_uri);
         const encodedReturnUrl = encodeURIComponent(encodeURIComponent(returnUrl));
