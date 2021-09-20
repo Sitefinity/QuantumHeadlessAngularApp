@@ -1,6 +1,6 @@
 import { Observable, of, ReplaySubject} from 'rxjs';
 import { catchError, map } from "rxjs/operators";
-import {AuthProvider, Token, QuantumUser, AUTH_PROVIDER_TOKEN} from '../auth.provider';
+import {AuthProvider, Token, AUTH_PROVIDER_TOKEN} from '../auth.provider';
 import { Injectable, ClassProvider, Inject } from "@angular/core";
 import { HttpClient } from "@angular/common/http";
 import { SettingsService } from "../../services/settings.service";

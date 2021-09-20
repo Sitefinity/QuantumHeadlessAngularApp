@@ -15,7 +15,7 @@ import { SignInRedirectComponent } from "../shared/auth/oidc/sign-in-redirect/si
 import { SignOutRedirectComponent } from "../shared/auth/oidc/sign-out-redirect/sign-out-redirect.component";
 import { AuthGuard } from "../shared/auth/auth.guard";
 import { TestimonialFormComponent } from "../shared/testimonials/testimonial-form/testimonial-form.component";
-import {OauthSignInRedirectComponent} from '../shared/auth/oauth/oauth-sign-in-redirect.component';
+import { OauthSignInRedirectComponent } from '../shared/auth/oauth/oauth-sign-in-redirect.component';
 
 
 const routes: Routes = [

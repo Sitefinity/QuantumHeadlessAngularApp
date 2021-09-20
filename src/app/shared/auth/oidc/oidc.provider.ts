@@ -1,5 +1,5 @@
-import {ClassProvider, Inject, Injectable, InjectionToken} from '@angular/core';
-import {AUTH_PROVIDER_TOKEN, AuthProvider, QuantumUser, Token} from '../auth.provider';
+import { ClassProvider, Inject, Injectable } from '@angular/core';
+import { AUTH_PROVIDER_TOKEN, AuthProvider, QuantumUser, Token } from '../auth.provider';
 import { UserManager, User } from "oidc-client";
 import { SettingsService } from "../../services/settings.service";
 import { of as observableOf, from as observableFrom, combineLatest as observableCombineLatest, Observable, ReplaySubject } from "rxjs";

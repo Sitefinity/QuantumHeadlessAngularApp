@@ -29,6 +29,7 @@ import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { RxBaseComponent } from "./shared/common/rx-base/rx-base.component";
 import { OAUTH_PROVIDER } from './shared/auth/oauth/oauth.provider';
 import { WINDOW_TOKEN } from './shared/common.constants';
+import {OauthSignInRedirectComponent} from './shared/auth/oauth/oauth-sign-in-redirect.component';
 
 @NgModule({
   declarations: [
@@ -49,7 +50,8 @@ import { WINDOW_TOKEN } from './shared/common.constants';
     CommentsComponent,
     TestimonialFormComponent,
     SidebarComponent,
-    RxBaseComponent
+    RxBaseComponent,
+    OauthSignInRedirectComponent
   ],
   imports: [
     BrowserModule,
