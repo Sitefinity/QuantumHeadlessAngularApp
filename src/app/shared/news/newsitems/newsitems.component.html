@@ -38,7 +38,7 @@
 <ng-template #newsItemTemplate let-newsItem="item">
   <div [ngClass]="{'featured_news_recent': newsItem.Featured}" class="col-xs-12 news_item_recent news_text homepage_news">
     <a routerLink="/news/{{newsItem.Id}}">
-      <img class="img-circle" *ngIf="newsItem.Thumbnail" [src]="newsItem.Thumbnail.Url" [alt]="newsItem.Thumbnail.AlternativeText"/>
+      <img class="img-circle" *ngIf="newsItem.Thumbnail && newsItem.Thumbnail[0]" [src]="newsItem.Thumbnail[0].Url" [alt]="newsItem.Thumbnail[0].AlternativeText"/>
     </a>
     <div class="homepage_news_text">
       <h4>
