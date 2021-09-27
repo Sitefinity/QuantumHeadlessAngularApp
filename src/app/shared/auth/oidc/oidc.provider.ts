@@ -2,7 +2,13 @@ import { ClassProvider, Inject, Injectable } from '@angular/core';
 import { AUTH_PROVIDER_TOKEN, AuthProvider, QuantumUser, Token } from '../auth.provider';
 import { UserManager, User } from "oidc-client";
 import { SettingsService } from "../../services/settings.service";
-import { of as observableOf, from as observableFrom, combineLatest as observableCombineLatest, Observable, ReplaySubject } from "rxjs";
+import {
+  of as observableOf,
+  from as observableFrom,
+  Observable,
+  ReplaySubject,
+  combineLatest, forkJoin
+} from 'rxjs';
 import { HttpClient } from "@angular/common/http";
 import { catchError, map } from "rxjs/operators";
 import { switchMap } from "rxjs/operators";
@@ -28,7 +34,13 @@ export class OidcProvider implements AuthProvider {
     scope: "openid profile",
     automaticSilentRenew: true,
     filterProtocolClaims: true,
-    loadUserInfo: true
+    loadUserInfo: true,
+    authority: null,
+    post_logout_redirect_uri: null,
+    redirect_uri: null,
+    silent_redirect_uri: null,
+    metadata: null,
+    signingKeys: null
   };
   constructor(private settingsProv: SettingsService,
               private http: HttpClient,
@@ -40,11 +52,30 @@ export class OidcProvider implements AuthProvider {
 
   init(): Observable<void> {
     this.initSettingsObj();
-    return this.http.get(this.authSettingsUrl).pipe(map((authSettings: AuthSettings) => {
+
+    const observables = [
+      this.http.get(this.authSettingsUrl),
+      this.initJwks()
+    ];
+
+    return forkJoin(observables).pipe(map((data) => {
+      const authSettings: AuthSettings = data[0];
       this.settings.scope = authSettings.Scope;
       this.manager = new UserManager(this.settings);
       this.attachEvents();
     }));
+  }
+
+  private initJwks(): Observable<any> {
+    const url = `${this.settings.authority}/.well-known/jwks`;
+    return this.http.get(url, { observe: "response", responseType: "json" })
+      .pipe(map((x: any) => {
+        const signingKeys = x.body.keys;
+
+        if (signingKeys) {
+          this.settings.signingKeys = signingKeys;
+        }
+      }));
   }
 
   attachEvents(): void {
@@ -53,6 +84,11 @@ export class OidcProvider implements AuthProvider {
         this.manager.storeUser(user);
         this.emitToken(user);
       }
+    });
+
+
+    this.manager.events.addUserLoaded(user => {
+      this.emitToken(user);
     });
   }
 
@@ -68,7 +104,7 @@ export class OidcProvider implements AuthProvider {
   }
 
   getPriority(): number {
-    return 3;
+    return 2;
   }
 
   isAvailable(): Observable<boolean> {
@@ -117,7 +153,7 @@ export class OidcProvider implements AuthProvider {
     const user = observableFrom(this.manager.getUser());
     const session = observableFrom(this.manager.querySessionStatus());
 
-    return observableCombineLatest(user, session).pipe(map(data => {
+    return combineLatest(user, session).pipe(map(data => {
       const [user, session] = data;
       if (user && session) {
         if (!user.expired && user.profile.sub === session.sub) {
@@ -126,13 +162,10 @@ export class OidcProvider implements AuthProvider {
       }
 
       return false;
-    }), catchError(() => {
+    }), catchError((error) => {
+      console.log(error);
       return observableOf(false);
     }));
-  }
-
-  getUser(): Observable<QuantumUser> {
-    return observableFrom(this.manager.getUser()).pipe(map( user => { return { Username: user.profile.preferred_username, Picture: user.profile.picture}; } ));
   }
 
   getToken(): Observable<Token> {

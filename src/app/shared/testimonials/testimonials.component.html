@@ -6,8 +6,8 @@
     <div class="col-md-10 testimonial-quote">
       <h3>{{testimonial.Quote}}</h3>
       <div class="testimonial-image">
-        <div *ngIf="testimonial.Photo" class="col-md-2">
-          <img [src]="testimonial.Photo.Url" [alt]="testimonial.Photo.AlternativeText">
+        <div *ngIf="testimonial.Photo[0]" class="col-md-2">
+          <img [src]="testimonial.Photo[0].Url" [alt]="testimonial.Photo[0].AlternativeText">
         </div>
         <div>
           <strong>{{testimonial.TestimonialAuthor}}</strong>

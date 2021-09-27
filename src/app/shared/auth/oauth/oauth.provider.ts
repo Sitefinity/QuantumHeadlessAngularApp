@@ -80,7 +80,7 @@ export class OauthProvider implements AuthProvider {
     }
 
     getPriority(): number {
-        return 2;
+        return 1;
     }
 
     isAvailable(): Observable<boolean> {

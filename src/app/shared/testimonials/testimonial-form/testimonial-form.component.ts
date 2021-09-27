@@ -1,4 +1,4 @@
-import { Component } from "@angular/core";
+import {Component} from '@angular/core';
 import { Testimonial } from "../testimonials.component";
 import { TestimonialsService } from "../../services/testimonials.service";
 import { Router } from "@angular/router";
@@ -8,6 +8,7 @@ import { Router } from "@angular/router";
   templateUrl: "./testimonial-form.component.html"
 })
 export class TestimonialFormComponent {
+  isPhotoSelected: boolean;
   model: Testimonial = new Testimonial();
   createdTestimonialMessage: string = null;
   creatingTestimonial: boolean;
@@ -15,7 +16,7 @@ export class TestimonialFormComponent {
   constructor(private testimonialsService: TestimonialsService, private router: Router) { }
 
   submitTestimonial(testimonialForm: any) {
-    if (testimonialForm.valid) {
+    if (testimonialForm.valid && this.isPhotoSelected) {
       this.creatingTestimonial = true;
       this.testimonialsService.createTestimonial(this.model).subscribe(isCreated => {
         this.creatingTestimonial = false;
@@ -42,5 +43,6 @@ export class TestimonialFormComponent {
     };
 
     fr.readAsDataURL(image);
+    this.isPhotoSelected = true;
   }
 }

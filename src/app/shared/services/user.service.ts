@@ -1,9 +1,7 @@
-import {Inject, Injectable} from '@angular/core';
-import {endpoint, SitefinityService} from './sitefinity.service';
-import {SettingsService} from './settings.service';
-import {ReplaySubject} from 'rxjs';
-import {NewsItem} from '../news/newsitems/newsitems.component';
-import {newsItemsDataOptions} from './news.service';
+import { Injectable} from '@angular/core';
+import { SitefinityService} from './sitefinity.service';
+import { ReplaySubject} from 'rxjs';
+import { NewsItem } from '../news/newsitems/newsitems.component';
 
 export const usersDataOptions = {
   urlName: "users"
@@ -19,7 +17,7 @@ export class UserService {
 
   getUserInfo() {
     const usersReplaySubject = new ReplaySubject<any>(1);
-    this.sitefinity.instance.data(newsItemsDataOptions).getSingle({
+    this.sitefinity.instance.data(usersDataOptions).getSingle({
       key: "current",
       query: this.sitefinity
         .query

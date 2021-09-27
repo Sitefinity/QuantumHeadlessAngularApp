@@ -46,7 +46,7 @@
         id="Quote"
         name="Quote"></textarea>
     </div>
-    <button [disabled]="f.invalid" type="submit" class="btn btn-primary btn-quantum-homepage">Submit</button>
+    <button [disabled]="f.invalid || !isPhotoSelected" type="submit" class="btn btn-primary btn-quantum-homepage">Submit</button>
     <div *ngIf="creatingTestimonial" class="sf-loading mt-1"><span></span></div>
   </form>
   <div class="alert alert-info mt-3" *ngIf="createdTestimonialMessage">
