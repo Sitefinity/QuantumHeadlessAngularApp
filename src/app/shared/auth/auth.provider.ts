@@ -6,8 +6,11 @@ export interface AuthProvider {
   signIn(returnUrl: string): Observable<void>;
   signOut(): Observable<void>;
   isLoggedIn(): Observable<boolean>;
-  getUser(): Observable<any>;
+  getPriority(): number;
+  isAvailable(): Observable<boolean>;
+  getName(): string;
   getToken(): Observable<Token>;
+  init(): Observable<void>;
 }
 
 export interface Token {

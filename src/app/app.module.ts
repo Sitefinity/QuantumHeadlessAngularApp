@@ -19,15 +19,17 @@ import { LOCAL_STORAGE, StorageService } from "./shared/services/storage.service
 import { LayoutComponent } from "./shared/layout/layout.component";
 import { TestimonialsComponent } from "./shared/testimonials/testimonials.component";
 import { CarouselModule } from "ngx-bootstrap/carousel";
-import { OidcProvider, WINDOW_TOKEN } from "./shared/auth/oidc/oidc.provider";
+import { OIDC_PROVIDER } from './shared/auth/oidc/oidc.provider';
 import { SignInRedirectComponent } from "./shared/auth/oidc/sign-in-redirect/sign-in-redirect.component";
 import { SignOutRedirectComponent } from "./shared/auth/oidc/sign-out-redirect/sign-out-redirect.component";
-import { AUTH_PROVIDER_TOKEN } from "./shared/auth/auth.provider";
 import { PathLocationStrategy } from "@angular/common";
 import { CommentsComponent } from "./shared/comments/comments.component";
 import { TestimonialFormComponent } from "./shared/testimonials/testimonial-form/testimonial-form.component";
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { RxBaseComponent } from "./shared/common/rx-base/rx-base.component";
+import { OAUTH_PROVIDER } from './shared/auth/oauth/oauth.provider';
+import { WINDOW_TOKEN } from './shared/common.constants';
+import {OauthSignInRedirectComponent} from './shared/auth/oauth/oauth-sign-in-redirect.component';
 
 @NgModule({
   declarations: [
@@ -48,7 +50,8 @@ import { RxBaseComponent } from "./shared/common/rx-base/rx-base.component";
     CommentsComponent,
     TestimonialFormComponent,
     SidebarComponent,
-    RxBaseComponent
+    RxBaseComponent,
+    OauthSignInRedirectComponent
   ],
   imports: [
     BrowserModule,
@@ -60,10 +63,11 @@ import { RxBaseComponent } from "./shared/common/rx-base/rx-base.component";
   ],
   providers: [
     PathLocationStrategy,
+    OIDC_PROVIDER,
+    OAUTH_PROVIDER,
     { provide: "Sitefinity", useValue: window["Sitefinity"] },
     { provide: LOCAL_STORAGE, useValue: new StorageService(localStorage) },
-    { provide: WINDOW_TOKEN, useValue: window },
-    { provide: AUTH_PROVIDER_TOKEN, useClass: OidcProvider }
+    { provide: WINDOW_TOKEN, useValue: window }
   ],
   bootstrap: [AppComponent]
 })
