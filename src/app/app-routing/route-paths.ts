@@ -6,7 +6,8 @@ export const ROUTE_PATHS = {
   NOT_FOUND: "**",
   NOT_FOUND_ANY: "**",
   SEARCH_RESULTS: "search-results",
-  CONFIG: "config"
+  CONFIG: "config",
+  LANDING: "landing-page"
 };
 
 export const AUTH_ROUTE_PATHS = {

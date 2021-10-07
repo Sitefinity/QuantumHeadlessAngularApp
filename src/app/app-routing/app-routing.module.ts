@@ -16,6 +16,7 @@ import { SignOutRedirectComponent } from "../shared/auth/oidc/sign-out-redirect/
 import { AuthGuard } from "../shared/auth/auth.guard";
 import { TestimonialFormComponent } from "../shared/testimonials/testimonial-form/testimonial-form.component";
 import { OauthSignInRedirectComponent } from '../shared/auth/oauth/oauth-sign-in-redirect.component';
+import {RootComponent} from '../layout-renderer/components/root.component';
 
 
 const routes: Routes = [
@@ -32,6 +33,12 @@ const routes: Routes = [
       { path: ROUTE_PATHS.SEARCH_RESULTS + "/:searchTerm",  component: SearchResultComponent, data: { title: "Search results", image: "Forums Head Banner"} },
       { path: ROUTE_PATHS.SUBMIT_TESTIMONIAL, component: TestimonialFormComponent, canActivate: [AuthGuard]}
     ]
+  },
+  {
+    path: ROUTE_PATHS.LANDING,
+    component: RootComponent,
+    canActivate: [ConfigGuard],
+    runGuardsAndResolvers: "always"
   },
   { path: "auth", children: [
       {

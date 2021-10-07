@@ -1,0 +1,38 @@
+.#{$selector-prefix}-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 178px;
+  height: 46px;
+  font-size: 15px;
+  font-weight: 700;
+  color: $primary;
+  border: 2px solid $primary;
+  border-radius: 25px;
+  text-transform: uppercase;
+
+  &:hover {
+    color: $primary;
+    text-decoration: none;
+    background-color: rgba($color: $primary, $alpha: .05);
+  }
+
+  &.-action {
+    background: $white;
+    border-color: $white;
+
+    &:hover {
+      background-color: darken($white, 2%);
+      border-color: darken($white, 2%);
+    }
+  }
+
+  &.-secondary {
+    color: $white;
+    border-color: $white;
+
+    &:hover {
+      background-color: rgba($color: $white, $alpha: .05);
+    }
+  }
+}

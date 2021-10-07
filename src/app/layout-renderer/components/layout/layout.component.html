@@ -1,0 +1,20 @@
+<ng-container *ngTemplateOutlet="itemTemplateName ? itemTemplateName : defaultTemplate; context: { columns: columns, isContainer: isContainer }">
+</ng-container>
+
+<ng-template #defaultTemplate let-widget>
+    <div>Unknown Template</div>
+</ng-template>
+
+<ng-template #columnsTemplate>
+  <div [class]="rowCss" *ngIf="!isContainer; else columnChildren">
+    <ng-container *ngTemplateOutlet="columnChildren;"></ng-container>
+  </div>
+</ng-template>
+
+<ng-template #columnChildren>
+  <div *ngFor="let col of columns" [class]="col.css">
+    <ng-template *ngFor="let child of col.children" [componentWrapper]="child" [culture]="Model.Culture" [siteId]="Model.SiteId">
+    </ng-template>
+  </div>
+</ng-template>
+

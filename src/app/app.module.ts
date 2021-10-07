@@ -30,6 +30,7 @@ import { RxBaseComponent } from "./shared/common/rx-base/rx-base.component";
 import { OAUTH_PROVIDER } from './shared/auth/oauth/oauth.provider';
 import { WINDOW_TOKEN } from './shared/common.constants';
 import {OauthSignInRedirectComponent} from './shared/auth/oauth/oauth-sign-in-redirect.component';
+import {LayoutRendererModule} from './layout-renderer/layout-renderer.module';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import {OauthSignInRedirectComponent} from './shared/auth/oauth/oauth-sign-in-re
     AppRoutingModule,
     RouterModule,
     FormsModule,
-    CarouselModule.forRoot()
+    LayoutRendererModule,
+    CarouselModule.forRoot(),
   ],
   providers: [
     PathLocationStrategy,

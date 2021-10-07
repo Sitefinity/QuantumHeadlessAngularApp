@@ -1,0 +1,27 @@
+.-#{$selector-prefix}-txt-white {
+  color: $white;
+}
+
+.-#{$selector-prefix}-txt-black {
+  color: $black;
+}
+
+.-#{$selector-prefix}-txt-gray {
+  color: $gray;
+}
+
+.-#{$selector-prefix}-txt-center {
+  text-align: center;
+}
+
+.-#{$selector-prefix}-txt-smaller {
+  font-size: 13px;
+}
+
+.-#{$selector-prefix}-txt-base {
+  font-size: 15px;
+}
+
+.-#{$selector-prefix}-txt-larger {
+  font-size: 20px;
+}
