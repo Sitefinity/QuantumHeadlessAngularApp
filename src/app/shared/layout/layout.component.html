@@ -28,6 +28,7 @@
                   <ul class="nav navbar-nav">
                     <li class="dropdown"><a class="upper-nav dropdown-toggle" routerLink="/news" routerLinkActive="active">News</a></li>
                     <li class="dropdown"><a class="upper-nav dropdown-toggle" routerLink="/showcases" routerLinkActive="active">Showcases</a></li>
+                    <li class="dropdown"><a class="upper-nav dropdown-toggle" routerLink="/landing-page1" routerLinkActive="active">Landing page</a></li>
                   </ul>
                 </div>
               </div>
@@ -47,8 +48,8 @@
 </header>
 <main class="container-fluid">
   <div class="row">
-    <div *ngIf="bannerImage | async" class="homepage-card-banner">
-      <img *ngIf="bannerImage | async" [alt]="(bannerImage | async).AlternativeText" [src]="(bannerImage | async).Url" [title]="(bannerImage | async).AlternativeText" class="splash">
+    <div class="homepage-card-banner" style="width: 1903px; height: 429px">
+      <img width="1903" height="429" *ngIf="bannerImage | async" [alt]="(bannerImage | async).AlternativeText" [src]="(bannerImage | async).Url" [title]="(bannerImage | async).AlternativeText" class="splash">
       <div class="container">
         <div class="homepage-card-banner-text">
           <h2 *ngIf="title | async; let title">{{title}}</h2>

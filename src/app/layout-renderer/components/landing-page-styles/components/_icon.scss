@@ -1,0 +1,21 @@
+.#{$selector-prefix}-quote {
+  position: relative;
+  display: inline-flex;
+  width: 55px;
+  height: 55px;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    font-family: $font-family-symbol;
+    font-weight: 800;
+    content: "\201D";
+  }
+
+  &.-large {
+    font-size: 66px;
+  }
+}
