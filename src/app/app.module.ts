@@ -67,7 +67,7 @@ import {LayoutRendererModule} from './layout-renderer/layout-renderer.module';
     PathLocationStrategy,
     OIDC_PROVIDER,
     OAUTH_PROVIDER,
-    { provide: "Sitefinity", useValue: window["Sitefinity"] },
+    { provide: "Sitefinity", useValue: window["Sitefinity" as keyof typeof window] },
     { provide: LOCAL_STORAGE, useValue: new StorageService(localStorage) },
     { provide: WINDOW_TOKEN, useValue: window }
   ],
